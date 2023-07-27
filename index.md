@@ -3,20 +3,20 @@ layout: workshop      # DON'T CHANGE THIS.
 # More detailed instructions (including how to fill these variables for an
 # online workshop) are available at
 # https://carpentries.github.io/workshop-template/customization/index.html
-venue: "FIXME"        # brief name of the institution that hosts the workshop without address (e.g., "Euphoric State University")
-address: "FIXME"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria"), videoconferencing URL, or 'online'
-country: "FIXME"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) for the institution that hosts the workshop
-language: "FIXME"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the workshop
-latitude: "45"        # decimal latitude of workshop venue (use https://www.latlong.net/)
-longitude: "-1"       # decimal longitude of the workshop venue (use https://www.latlong.net)
-humandate: "FIXME"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
-humantime: "FIXME"    # human-readable times for the workshop e.g., "9:00 am - 4:30 pm CEST (7:00 am - 2:30 pm UTC)"
-startdate: FIXME      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
-enddate: FIXME        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
-instructor: ["instructor one", "instructor two"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
-helper: ["helper one", "helper two"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
-email: ["first@example.org","second@example.org"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
-collaborative_notes:  # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document (e.g., https://pad.carpentries.org/2015-01-01-euphoria)
+venue: "UNSW"        # brief name of the institution that hosts the workshop without address (e.g., "Euphoric State University")
+address: "Sydney"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria"), videoconferencing URL, or 'online'
+country: "au"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) for the institution that hosts the workshop
+language: "en"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the workshop
+latitude: "-33.9173425"        # decimal latitude of workshop venue (use https://www.latlong.net/)
+longitude: "151.2290788"       # decimal longitude of the workshop venue (use https://www.latlong.net)
+humandate: "Mar 20-22, 2023"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
+humantime: "10:00 am - 4:00 pm"    # human-readable times for the workshop e.g., "9:00 am - 4:30 pm CEST (7:00 am - 2:30 pm UTC)"
+startdate: 2023-03-20      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
+enddate: 2023-03-22        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
+instructor: ["Paul Hancock"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
+helper: ["Joel Dunstan"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
+email: ["paul.hancock@curtin.edu.au"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
+collaborative_notes:  'https://pad.carpentries.org/2023-03-20CodingSydney' # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document (e.g., https://pad.carpentries.org/2015-01-01-euphoria)
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
 ---
 
@@ -29,32 +29,6 @@ Edit the values in the block above to be appropriate for your workshop.
 If the value is not 'true', 'false', 'null', or a number, please use
 double quotation marks around the value, unless specified otherwise.
 And run 'make workshop-check' *before* committing to make sure that changes are good.
-{% endcomment %}
-
-
-{% comment %}
-8< ============= For a workshop delete from here =============
-For a workshop please delete the following block until the next dashed-line
-{% endcomment %}
-
-
-<div class="alert alert-danger">
-This is the workshop template. Delete these lines and use it to
-<a href="https://carpentries.github.io/workshop-template/customization/index.html">customize</a>
-your own website. If you are running a self-organized workshop or have not put
-in a workshop request yet, please also fill in
-<a href="{{site.amy_site}}/forms/self-organised/">this workshop request form</a>
-to let us know about your workshop and our administrator may contact you if we
-need any extra information.
-If this is a pilot workshop for a new lesson,
-set the `pilot` field to `true` in `_config.yml`.
-For workshops teaching a lesson in The Carpentries Incubator,
-remember to uncomment the `incubator_lesson_site`, `incubator_pre_survey`, and `incubator_post_survey`
-fields in `_config.yml`
-</div>
-
-{% comment %}
-8< ============================= until here ==================
 {% endcomment %}
 
 
@@ -82,25 +56,6 @@ It looks like you are setting up a website for a Software Carpentry curriculum b
 {% endunless %}
 {% endif %}
 
-{% comment %}
-EVENTBRITE
-
-This block includes the Eventbrite registration widget if
-'eventbrite' has been set in the header.  You can delete it if you
-are not using Eventbrite, or leave it in, since it will not be
-displayed if the 'eventbrite' field in the header is not set.
-{% endcomment %}
-{% if page.eventbrite %}
-<strong>Some adblockers block the registration window. If you do not see the
-  registration box below, please check your adblocker settings.</strong>
-<iframe
-  src="https://www.eventbrite.com/tickets-external?eid={{page.eventbrite}}&ref=etckt"
-  frameborder="0"
-  width="100%"
-  height="280px"
-  scrolling="auto">
-</iframe>
-{% endif %}
 
 
 <h2 id="general">General Information</h2>
@@ -111,6 +66,10 @@ INTRODUCTION
 Edit the general explanatory paragraph below if you want to change
 the pitch.
 {% endcomment %}
+<p> This workshop was developed by <a href="https://adacs.org.au/">ADACS</a> as training project for our <a href="https://adacs.org.au/software-services/merit-allocation-program-application/">Merit Allocation Program</a>.
+The training was developed in collaboration with the proposers of the project: Drs Caroline Foster, Nandini Sahu, and Cristina Martinez-Lombilla. 
+The workshop is developed in the style of a data carpentries workshop.</p>
+
 {% if site.carpentry == "swc" %}
 {% include swc/intro.html %}
 {% elsif site.carpentry == "dc" %}
@@ -139,42 +98,14 @@ workshop is only open to people from a particular institution.
 
 {% comment %}
 LOCATION
-
-This block displays the address and links to maps showing directions
-if the latitude and longitude of the workshop have been set.  You
-can use https://www.latlong.net/ to find the lat/long of an
-address.
 {% endcomment %}
 {% assign begin_address = page.address | slice: 0, 4 | downcase  %}
-{% if page.address == "online" %}
-{% assign online = "true_private" %}
-{% elsif begin_address contains "http" %}
-{% assign online = "true_public" %}
-{% else %}
-{% assign online = "false" %}
-{% endif %}
-{% if page.latitude and page.longitude and online == "false" %}
+
 <p id="where">
   <strong>Where:</strong>
-  {{page.address}}.
-  Get directions with
-  <a href="//www.openstreetmap.org/?mlat={{page.latitude}}&mlon={{page.longitude}}&zoom=16">OpenStreetMap</a>
-  or
-  <a href="//maps.google.com/maps?q={{page.latitude}},{{page.longitude}}">Google Maps</a>.
+  <a href="//www.learningenvironments.unsw.edu.au/physical-spaces/quadrangle-building/k-e15-1043-quadrangle-1043">UNSW Quadrangle Building, rm 1043</a>
+  - <a href="https://www.google.com/maps/place/Quadrangle+Building+(E15)/@-33.9172473,151.2308746,21z/data=!3m1!5s0x6b12b18afc9706f3:0x3800b51ed65ace5!4m14!1m7!3m6!1s0x6b12b18b0302c1a7:0x1d017d69037a07a0!2sUNSW+Sydney!8m2!3d-33.917347!4d151.2312675!16zL20vMDEybHpy!3m5!1s0x6b12b1a4c06b379f:0x7dd2a25a3e6439ce!8m2!3d-33.9172802!4d151.2309543!16s%2Fg%2F11hfg3gy34">Google Maps</a>.
 </p>
-{% elsif online == "true_public" %}
-<p id="where">
-  <strong>Where:</strong>
-  online at <a href="{{page.address}}">{{page.address}}</a>.
-  If you need a password or other information to access the training,
-  the instructor will pass it on to you before the workshop.
-</p>
-{% elsif online == "true_private" %}
-<p id="where">
-  <strong>Where:</strong> This training will take place online.
-  The instructors will provide you with the information you will need to connect to this meeting.
-</p>
-{% endif %}
 
 {% comment %}
 DATE
@@ -325,33 +256,14 @@ available at https://codimd.carpentries.org
 <h2 id="collaborative_notes">Collaborative Notes</h2>
 
 <p>
-We will use this <a href="{{ page.collaborative_notes }}">collaborative document</a> for chatting, taking notes, and sharing URLs and bits of code.
+We will use this <a href="{{ page.collaborative_notes }}">collaborative document</a> (archived <a href="{{page.root}}{% link files/EtherPadArchive.pdf %}"> here</a>) for chatting, taking notes, and sharing URLs and bits of code.
 </p>
 <hr/>
 {% endif %}
 
-
-{% comment %}
-SURVEYS - DO NOT EDIT SURVEY LINKS
-{% endcomment %}
-<h2 id="surveys">Surveys</h2>
-<p>Please be sure to complete these surveys before and after the workshop.</p>
-{% if site.carpentry == "incubator" %}
-<p><a href="{{ site.incubator_pre_survey }}">Pre-workshop Survey</a></p>
-<p><a href="{{ site.incubator_post_survey }}">Post-workshop Survey</a></p>
-{% elsif site.incubator_pre_survey or site.incubator_post_survey %}
-<div class="alert alert-danger">
-WARNING: you have defined custom pre- and/or post-survey links for
-a workshop not configured for The Carpentries Incubator
-(the value of `curriculum` is not set to `incubator` in `_config.yml`).
-Please comment out the `incubator_pre_survey` and `incubator_post_survey` fields
-in `_config.yml` or, if this workshop is teaching a lesson in the Incubator,
-change the value of `carpentry` to `incubator`.
-</div>
-{% else %}
-<p><a href="{{ site.pre_survey }}{{ site.github.project_title }}">Pre-workshop Survey</a></p>
-<p><a href="{{ site.post_survey }}{{ site.github.project_title }}">Post-workshop Survey</a></p>
-{% endif %}
+<h3> Workshop surveys </h3>
+<p><a href="{{ site.pre_survey }}">Pre-workshop Survey</a> (also for registration)</p>
+<p><a href="{{ site.post_survey }}">Post-workshop Survey</a></p>
 
 <hr/>
 

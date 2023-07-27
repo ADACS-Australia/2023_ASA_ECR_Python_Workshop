@@ -12,8 +12,7 @@ keypoints:
 - "Everyone is here to learn and that means making mistakes"
 ---
 ## Acknowledgement of country
-We wish to acknowledge the custodians of the land we reside on. These lessons were developed on the lands of the Wadjuk (Perth region) people of the Nyoongar nation. This workshop will be delivered on the lands of the Bedegal people (UNSW campus), and we will be using computing resources that are on the lands of the Ngunnawal and Ngambri people (Canberra region).
-We pay our respect to their Elders and acknowledge their continuing culture and the contribution they make to the life of our cities and regions. 
+We wish to acknowledge the custodians of the land we reside on. These lessons were developed on the lands of the Wadjuk (Perth region) people of the Nyoongar nation. We pay our respect to their Elders and acknowledge their continuing culture and the contribution they make to the life of our cities and regions. 
 
 
 ## Overview
@@ -68,7 +67,7 @@ An account on [GitHub](https://github.com/) is required for some of the activiti
 ## Engagement
 
 This workshop is developed for three main delivery methods:
-1. Facilitated, in person, at UNSW
+1. Facilitated, in person, at Curtin
 2. Facilitated, online, in parallel with (1)
 3. Self-paced, online, via this website.
 
@@ -79,7 +78,7 @@ The more you engage with your fellow learners and the more questions that you as
 We will be using sticky notes for in-person participants to indicate their readiness to move on: please stick them on your laptop screen to indicate if you need help or are done and ready to move ahead.
 For those joining online we'll be using emotes to indicate the same.
 
-We will use a shared document ([etherpad](https://pad.carpentries.org/2023-03-20CodingSydney)) to manage and record many of our interactions.
+We will use a shared document ([etherpad]({{site.ether_pad}}))) to manage and record many of our interactions.
 
 
 ## Conduct

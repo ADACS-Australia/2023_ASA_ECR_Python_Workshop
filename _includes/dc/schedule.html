@@ -1,111 +1,81 @@
 <div class="row">
-  <div class="col-md-4">
-    <h3>Day 1</h3>
-    <table class="table table-striped">
-      <tr>
-        <td>Before starting</td>
-        <td><a href="{{ site.pre_survey }}" target="_blank">Pre-workshop survey / Registration</a></td>
-      </tr>
-      <tr>
-        <td> Morning </td>
-        <td><a href="{{page.root}}{% link _episodes/Setup.md %}">Setup</a></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td> <a href="{{page.root}}{% link _episodes/BestPracticesInComputing.md %}">Intro to best practices</a></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><a href="{{page.root}}{% link _episodes/ProofOfConcept.md %}">Developing a proof of concept</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td><a href="{{page.root}}{% link _episodes/ProjectStructure.md %}">Project structure</a></td>
-      </tr>
-      <tr>
-        <td>Afternoon</td>
-        <td> <a href="{{page.root}}{% link _episodes/VersionControl.md %}">Version control</a></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td> <a href="{{page.root}}{% link _episodes/CodingStyle.md %}">Coding Style</a></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td> <a href="{{page.root}}{% link _episodes/Documentation.md %}">Documentation</a></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td> <a href="{{page.root}}{% link _episodes/GitHub.md %}">Connecting to GitHub</a></td>
-      </tr>
-    </table>
-  </div>
-  <div class="col-md-4">
-    <h3>Day 2</h3>
-    <table class="table table-striped">
-      <tr>
-        <td>Morning</td>
-        <td> <a href="{{page.root}}{% link _episodes/Testing.md %}">Writing and running tests</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/DependencyManagement.md %}">Virtual environments and dependency
-            management</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/PublishingCode.md %}">Publishing code</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/PythonPackages.md %}">Python packages</a></td>
-      </tr>
-      <tr>
-        <td>Afternoon</td>
-        <td> <a href="{{page.root}}{% link _episodes/FunctionsClassesAndOO.md %}">Functions, classes, and OO</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/Containers.md %}">Containers</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/GitWorkFlow.md %}">Git Workflow</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/IDEs.md %}">Interactive Development Environments</a></td>
-      </tr>
-    </table>
-  </div>
-  <div class="col-md-4">
-    <h3>Day 3</h3>
-    <table class="table table-striped">
-      <tr>
-        <td>Morning</td>
-        <td> <a href="{{page.root}}{% link _episodes/WhatIsHPC.md %}">What is HPC</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/WorkingOnAnHPC.md %}">Working with HPC</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/BenchmarkingAndProfiling.md %}">Testing, Benchmarking, and
-            Profiling</a></td>
-      </tr>
-      <tr>
-        <td>Afternoon</td>
-        <td> <a href="{{page.root}}{% link _episodes/Optimization.md %}">Optimization</a></td>
-      </tr>
-      <tr>
-        <td> </td>
-        <td> <a href="{{page.root}}{% link _episodes/ParallelComputing.md %}">Parallel Computing</a></td>
-      </tr>
-      <tr>
-        <td>End of Workshop</td>
-        <td><a href="{{ site.post_survey }}">Post-workshop survey</a></td>
-      </tr>
-    </table>
-  </div>
+  <table>
+    <tr>
+      <td>Pre-workshop</td>
+      <td><a href="{{ site.pre_survey }}" target="_blank">Pre-workshop survey</a></td>
+    </tr>
+  </table>
+  <table class="table table-striped">
+    <tr>
+      <th> Time</th>
+      <th> Monday </th>
+      <th> Tuesday </th>
+      <th> Wednesday </th>
+      <th> Thursday </th>
+      <th> Friday </th>
+    </tr>
+    <tr>
+      <td> 09:00 - 10:30 </td>
+      <td><a href="{{page.root}}{% link _episodes/Setup.md %}">Introduction and Setup</a></td>
+      <td><a href="{{page.root}}{% link _episodes/Setup.md %}">Version control, Git, and Github</a></td>
+      <td><a href="{{page.root}}{% link _episodes/Setup.md %}">?</a></td>
+      <td><a href="{{page.root}}{% link _episodes/Setup.md %}">Benchmarking</a></td>
+      <td><a href="{{page.root}}{% link _episodes/Setup.md %}">SQL in Python</a></td>
+    </tr>
+    <tr>
+      <td> 10:30 - 11:00 </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+    </tr>
+    <tr>
+      <td> 11:00 - 12:30 </td>
+      <td><a href="{{page.root}}{% link _episodes/ProofOfConcept.md %}">Project planning and structure</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProofOfConcept.md %}">Testing, Pytest, and GitHub actions</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProofOfConcept.md %}">Documentation</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProofOfConcept.md %}">Profiling</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProofOfConcept.md %}">Pandas</a></td>
+    </tr>
+    <tr>
+      <td> 12:30 - 13:30 </td>
+      <td> Lunch Break </td>
+      <td> Lunch Break </td>
+      <td> Lunch Break </td>
+      <td> Lunch Break </td>
+      <td> Lunch Break </td>
+    </tr>
+    <tr>
+      <td> 13:30 - 15:00</td>
+      <td><a href="{{page.root}}{% link _episodes/ProjectStructure.md %}">Python packages</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProjectStructure.md %}">Git Workflows, pull requests, and code
+          review</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProjectStructure.md %}">Debugging</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProjectStructure.md %}">Optimization</a></td>
+      <td><a href="{{page.root}}{% link _episodes/ProjectStructure.md %}">Parallelization</a></td>
+    </tr>
+    <tr>
+      <td> 15:00 - 15:30 </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+      <td> Tea Break </td>
+    </tr>
+    <tr>
+      <td> 15:30 - 17:00 </td>
+      <td> <a href="{{page.root}}{% link _episodes/VersionControl.md %}">Group project setup</a></td>
+      <td> <a href="{{page.root}}{% link _episodes/VersionControl.md %}">Group project work</a></td>
+      <td> <a href="{{page.root}}{% link _episodes/VersionControl.md %}">Group project work</a></td>
+      <td> <a href="{{page.root}}{% link _episodes/VersionControl.md %}">Group project work</a></td>
+      <td> <a href="{{page.root}}{% link _episodes/VersionControl.md %}">Group project demonstrations</a></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td>Post-workshop</td>
+      <td><a href="{{ site.post_survey }}" target="_blank">Post-workshop survey</a></td>
+    </tr>
+  </table>
 </div>

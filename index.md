@@ -3,14 +3,14 @@ layout: workshop      # DON'T CHANGE THIS.
 # More detailed instructions (including how to fill these variables for an
 # online workshop) are available at
 # https://carpentries.github.io/workshop-template/customization/index.html
-venue: "Curtin University"        # brief name of the institution that hosts the workshop without address (e.g., "Euphoric State University")
-address: "Perth"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria"), videoconferencing URL, or 'online'
+venue: "Perth, Sydney, Melbourne"        # brief name of the institution that hosts the workshop without address (e.g., "Euphoric State University")
+address: "Various"      # full street address of workshop (e.g., "Room A, 123 Forth Street, Blimingen, Euphoria"), videoconferencing URL, or 'online'
 country: "au"      # lowercase two-letter ISO country code such as "fr" (see https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes) for the institution that hosts the workshop
 language: "en"     # lowercase two-letter ISO language code such as "fr" (see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the workshop
-latitude: "-33.9173425"        # decimal latitude of workshop venue (use https://www.latlong.net/)
-longitude: "151.2290788"       # decimal longitude of the workshop venue (use https://www.latlong.net)
-humandate: "Sept 04-08, 2023"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
-humantime: "10:00 am - 4:00 pm"    # human-readable times for the workshop e.g., "9:00 am - 4:30 pm CEST (7:00 am - 2:30 pm UTC)"
+latitude: "-31.9952735"        # decimal latitude of workshop venue (use https://www.latlong.net/)
+longitude: "115.8895341"       # decimal longitude of the workshop venue (use https://www.latlong.net)
+humandate: "September 4-8, 11-16, 25-1 (Oct) 2023"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
+humantime: "9:00 am - 5:00 pm Local"    # human-readable times for the workshop e.g., "9:00 am - 4:30 pm CEST (7:00 am - 2:30 pm UTC)"
 startdate: 2023-09-04      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
 enddate: 2023-09-08        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
 instructor: ["Paul Hancock"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
@@ -101,24 +101,30 @@ LOCATION
 {% endcomment %}
 {% assign begin_address = page.address | slice: 0, 4 | downcase  %}
 
-<p id="where">
-  <strong>Where:</strong>
-  <a href="//www.learningenvironments.unsw.edu.au/physical-spaces/quadrangle-building/k-e15-1043-quadrangle-1043">UNSW Quadrangle Building, rm 1043</a>
-  - <a href="https://www.google.com/maps/place/Quadrangle+Building+(E15)/@-33.9172473,151.2308746,21z/data=!3m1!5s0x6b12b18afc9706f3:0x3800b51ed65ace5!4m14!1m7!3m6!1s0x6b12b18b0302c1a7:0x1d017d69037a07a0!2sUNSW+Sydney!8m2!3d-33.917347!4d151.2312675!16zL20vMDEybHpy!3m5!1s0x6b12b1a4c06b379f:0x7dd2a25a3e6439ce!8m2!3d-33.9172802!4d151.2309543!16s%2Fg%2F11hfg3gy34">Google Maps</a>.
-</p>
 
-{% comment %}
-DATE
+<table>
+  <tr>
+    <th>Location</th>
+    <th>Date</th>
+    <th>Map</th>
+  </tr>
+  <tr>
+    <td><a href="https://astronomy.curtin.edu.au/">Curtin Institute for Radio Astronomy</a></td>
+    <td>September 4th-8th</td>
+    <td><a href="https://www.google.com/maps/place/Curtin+Institute+of+Radio+Astronomy+(CIRA)/@-31.9952735,115.8895341,18z/data=!4m6!3m5!1s0x2a32bc83267dccdb:0x379a50125fb670db!8m2!3d-31.9945426!4d115.8885841!16s%2Fg%2F11c2dgc6pb?entry=ttu">Google Maps</a></td>
+  </tr>
+  <tr>
+    <td>Macquarie University</td>
+    <td>September 11th-16th</td>
+    <td>link</td>
+  </tr>
+  <tr>
+   <td>Melbourne University</td>
+   <td>September 25th - October 1st</td>
+   <td>link</td>
+  </tr>
+</table>
 
-This block displays the date and links to Google Calendar.
-{% endcomment %}
-{% if page.humandate %}
-<p id="when">
-  <strong>When:</strong>
-  {{page.humandate}}.
-  {% include workshop_calendar.html %}
-</p>
-{% endif %}
 
 {% comment %}
 SPECIAL REQUIREMENTS

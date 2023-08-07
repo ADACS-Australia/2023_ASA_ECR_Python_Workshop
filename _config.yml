@@ -159,22 +159,24 @@ highlighter: rouge
 episode_order:
   - Setup
   - BestPracticesInComputing
-  - ProofOfConcept
   - ProjectStructure
+  - PythonPackages
+  - GroupProject
   - VersionControl
-  - CodingStyle
-  - Documentation
   - GitHub
   - Testing
-  - DependencyManagement
-  - PublishingCode
-  - PythonPackages
-  - FunctionsClassesAndOO
-  - Containers
   - GitWorkFlow
-  - IDEs
-  - WhatIsHPC
-  - WorkingOnAnHPC
+  - Documentation
+  - Debugging
   - BenchmarkingAndProfiling
   - Optimization
   - ParallelComputing
+  - SQLinPython
+  - Pandas
+
+
+  # - CodingStyle
+  # - DependencyManagement
+  # - PublishingCode
+  # - FunctionsClassesAndOO
+  # - IDEs

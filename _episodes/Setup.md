@@ -1,7 +1,7 @@
 ---
 title: "Introduction and setup"
-teaching: 15
-exercises: 15
+teaching: 30
+exercises: 0
 questions:
 - "How can I prepare?"
 - "How will we be learning?"
@@ -16,31 +16,15 @@ We wish to acknowledge the custodians of the land we reside on. These lessons we
 
 
 ## Overview
-This training was developed by [ADACS](https://adacs.org.au) at the request of Caroline Foster as part of their 2023A training project.
+This training was developed by [ADACS](https://adacs.org.au) at the request of Henry Zovaro as part of their 2023B training project.
 
 This workshop is intended for researchers who have little or no formal computing training, but who have learned to get by via self or peer learning, and who are interested to being exposed to some best practices in computing and software development.
 
 This workshop has been developed in the style of Carpentries (hence the site layout) but is not an official Carpentries lesson.
-Some of the content is intended for learners to read, think, and ask questions, some of it will require learners to write code or use the HPC facility for themselves, and other parts will be treated as a discussion session where no or little computing interaction will be needed.
+Some of the content is intended for learners to read, think, and ask questions.
+The workshop is designed to have three lessons per day dedicated to explaining and demonstrating skills, followed by an afternoon session of skills practice where people can work on their group project.
 
-## Required software / services
-You will need:
-- Access to Zoom video conferencing system (for remote participants, depending on which works on the day!)
-  - [Join from PC, Mac, Linux, iOS or Android](https://unsw.zoom.us/j/86138935425?pwd=dXBpVC9nWnh5RnBSWmpGUlpRSUc0QT09) 
-  - Password: see [etherpad]({{site.ether_pad}})
-- A bash terminal
-- An account on NCI  (see below)
-- A zest for life
-
-See instructions on the [home page]({{page.root}}#Setup)
-
-### An account on NCI
-You will need to have an account on the National Compute Infrastructure (NCI) in order to complete some of the exercises for this course.
-See [these instructions](https://my.nci.org.au/mancini/signup/0) for how you can obtain an account.
-
-Once you have an account you'll need to join the group `vp91`.
-
-## Assumed knowledge
+## Assumed knowledge / required software
 This course assumes that you have basic proficiency in python.
 
 One of the main lessons for this workshop is to use version control for all your text based projects (papers / code).
@@ -55,22 +39,16 @@ Software requirements
   - For windows this means using something like [gitbash](https://gitforwindows.org/), [WSL](https://docs.microsoft.com/en-us/windows/wsl/install), or the [Anaconda](https://www.anaconda.com/) prompt
   - For OSX or Linux the regular terminal will be fine
 - git, either from the command line, using a git desktop app, or as an add on to PyCharm or VSCode.
+  - An account on [GitHub](https://github.com/) is also required.
 
-An account on [GitHub](https://github.com/) is required for some of the activities.
-
+Assumed knowledge (links for info)
 
 - (linux) command line / bash [SWC Lesson](https://swcarpentry.github.io/shell-novice/), [ADACS Lesson](https://adacs.org.au/courses/introduction-to-bash/)
-- ssh login
+- ssh login [SWC Lesson](https://carpentries-incubator.github.io/shell-extras/02-ssh/)
 - command line text editor ([emacs](https://www.linuxfordevices.com/tutorials/linux/emacs-editor-tutorial)/[vim](https://www.tutorialspoint.com/vim/index.htm#)/[nano](https://www.linuxfordevices.com/tutorials/linux/nano-editor-in-linux))
 - Python scripting [SWC Lesson](http://swcarpentry.github.io/python-novice-gapminder/), [ADACS Lesson](https://adacs.org.au/courses/introduction-to-python/)
 
 ## Engagement
-
-This workshop is developed for three main delivery methods:
-1. Facilitated, in person, at Curtin
-2. Facilitated, online, in parallel with (1)
-3. Self-paced, online, via this website.
-
 This workshop is all about learning by doing.
 We will be engaging in live coding type exercises for most of the workshop, and we will set challenges and exercises for you to complete in groups.
 The more you engage with your fellow learners and the more questions that you ask, the more that you will get out of this workshop.
@@ -101,11 +79,19 @@ We ask that you follow these guidelines:
 See the [ASA2022 code of conduct](https://www.asa2022.org/code-of-conduct) and the [Software Carpentries code of conduct](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html) for more information.
 
 
-
 > ## Introduce yourselves
 > ![IceBreaker](https://ichef.bbci.co.uk/news/976/cpsprodpb/D6B5/production/_123956945_225107a3-318d-4c2e-b040-2dcd03c4698a.jpg){: width="400"}
 > 
-> Introduce yourself to your peers by telling us your name, a band you are listening to at the moment, and your favorite kind of pet.
+> Introduce yourself to your peers by telling us your name, a dish that you enjoy cooking, and something you look forward to doing in the summer.
 > 
 > Do this in person and via the [etherpad]({{site.ether_pad}}).
 {: .challenge}
+
+
+## Group projects
+Throughout this week, we'll spend the mornings learning different aspects of software development in python.
+During the lessons there will be opportunities to practices the lessons learned, but often these will involve simple or contrived examples.
+We have decided to use mini group projects to allow you all to really dig into the lessons learned and practice them in a more real world situation.
+
+This afternoon we'll be forming groups and choosing projects.
+The projects will be based on making a python module of your choice, we have suggestions, but recommend that you think of the modules/code that you wish existed throughout the day.

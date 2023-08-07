@@ -36,7 +36,7 @@ Within you software project directory we recommend the following structure:
 ├── README.md          <- Description of this project
 ├── bin                <- Your compiled code can be stored here (not tracked by git)
 ├── config             <- Configuration files, e.g., for sphinx or for your model if needed
-├── data
+├── data               <- Data used by your project (not tracked by git)
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
 │   ├── processed      <- The final data sets for analysis.

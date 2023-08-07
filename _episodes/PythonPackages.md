@@ -91,15 +91,16 @@ Firstly we should discuss the contents and structure of a typical python package
 
 For a python project, the recommended content/structure is:
 ~~~
-/docs
-/mymodule
-/mymodule/data
-/scripts
-/tests
-LICENSE
-README.md
-requirements.txt
-setup.py
+.
+├── README.md          <- Description of this project
+├── LICENSE.md         <- License for others to re use your work
+├── requirements.txt   <- python dependency management
+├── setup.py           <- for installing your module
+├── docs               <- (dir) documentation for your module
+├── mymodule           <- (dir) code for your module
+|   └── data           <- (dir) data bundled with your module
+├── scripts            <- (dir) scripts for users to interact with
+└── tests              <- (dir) test for your module
 ~~~
 {: .output}
 
@@ -107,15 +108,16 @@ Compare this to the more generic structure that we discussed in [this episode]({
 Many of the directories are the same, though instead of `src` we now have `mymodule` and `scripts` as separate directories.
 
 The files and directories are as follows:
+- `LICENSE.md` is for licensing your code. Be as permissive as possible, check with your institute as to what they recommend you use. (They may not care). 
+- `README.md` is not documentation. This should contain a high level description of your package. It is what GitHub will display on the front page of your repository.
+- `requirements.txt` is where you list all of your code dependencies (like numpy etc). This makes it easier for people to install your package.
+- `setup.py` is a script that will allow package managers like `pip` to auto-magically install your package. It can also be run directly.
 - `/docs` is where you should store the stand-alone documentation for your package.
 - `/mymodule` is both the name of your module, and the location that the module code should be kept
 - `/mymodule/data` is where you should store data that are required by your module. Not always needed. Maybe you have some constants or templates that you use to make your life easier. They should be stored here.
 - `/scripts` is where you put the scripts that a user will interact with from the command line. Typically without the `.py` extension.
 - `/tests` is where you put all the code and data that are required for testing your package
-- `LICENSE` is for licensing your code. Be as permissive as possible, check with your institute as to what they recommend you use. (They may not care). 
-- `README.md` is not documentation. This should contain a high level description of your package. It is what GitHub will display on the front page of your repository.
-- `requirements.txt` is where you list all of your code dependencies (like numpy etc). This makes it easier for people to install your package.
-- `setup.py` is a script that will allow package managers like `pip` to auto-magically install your package. It can also be run directly.
+
 
 We'll come back to each of these things later in this course but for now let's just focus on the `mymodule` and `scripts` directories.
 

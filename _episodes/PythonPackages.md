@@ -1,7 +1,7 @@
 ---
 title: "Packaging code"
-teaching: 20
-exercises: 40
+teaching: 30
+exercises: 60
 questions:
 - "What is a python package or module?"
 - "How can I make my own python module?"

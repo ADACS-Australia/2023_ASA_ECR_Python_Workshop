@@ -1,7 +1,7 @@
 ---
 title: "Group project setup"
-teaching: 90
-exercises: 0
+teaching: 30
+exercises: 60
 questions:
 - "What is this project?"
 objectives:
@@ -118,3 +118,6 @@ Within your group, identify the activities that you have the *least* experience 
 > Come up with a name for the python module that you'll be developing and write a short problem statement for the project as well as some learning objectives from the above list.
 >
 {: .challenge}
+
+## Main engine start
+In the remaining time, begin planning and working on your projects.

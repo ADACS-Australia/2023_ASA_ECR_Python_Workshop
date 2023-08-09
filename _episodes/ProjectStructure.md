@@ -1,7 +1,7 @@
 ---
 title: "Project Structure"
-teaching: 15
-exercises: 15
+teaching: 10
+exercises: 10
 questions:
 - "How do I start a new project?"
 - "What can I do early in a project to make my life easier later on?"

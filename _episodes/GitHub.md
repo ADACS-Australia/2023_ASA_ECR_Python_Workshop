@@ -1,7 +1,7 @@
 ---
 title: "Using GitHub"
-teaching: 15
-exercises: 15
+teaching: 30
+exercises: 30
 questions:
 - "Why use an online repo like GitHub or GitLab?"
 - "How do I create a new github repo?"

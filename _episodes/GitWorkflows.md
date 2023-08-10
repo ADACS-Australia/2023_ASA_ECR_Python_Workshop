@@ -95,3 +95,141 @@ GitHub will automatically prompt you to delete the branch once it is merged.
 
 This workflow is very good for working in teams as it will allow you to more easily incorporate project management into your development workflow.
 When working in a team, rules or guides for branch names, testing and documentation requirements, and coding style, should all be agreed on and ideally documented within the repository itself.
+
+
+## Conflicts
+As soon as people can work in parallel, or on different branches, they'll likely step on each other's toes.
+This will even happen with a single person: if we are working on a piece of software on both our laptop and a server in the lab, we could make different changes to each copy.
+Version control helps us manage these conflicts by giving us tools to resolve overlapping changes.
+
+![Merging Conflicts](https://swcarpentry.github.io/git-novice/fig/conflict.svg)
+
+The process of joining different branches together is called merging.
+Just like the typical Perth driver, git doesn't always know how to handle a merge.
+
+To see how we can resolve conflicts, we must first create one!
+The most reliable way to create a conflict is to edit overlapping parts of a file in two locations.
+Either in two branches, or in two instances of your repository.
+
+
+> ## Create a conflict
+> Make sure your remote repository is up to date by having a clean local repository and running `git push origin main`.
+>
+> Go to your GitHub repo and choose the `sky_sim.py` file.
+> Open this file and edit it using the GitHub online editor.
+> Change the `ra` and `dec` values for our galaxy.
+> Save the file and make a note about the commit like "updating ra/dec from GitHub".
+>
+> On your local repo, edit the same file, and change the `ra` and `dec` to a **different** value.
+> Save the file and make a commit with a comment like "updating the ra/dec from local".
+>
+> Don't push/pull your repo (yet).
+{: .challenge}
+
+> ## Note
+> In the above we have explicitly avoided doing a `git push` or `git pull` between working in different locations because we intentially want a conflict to occur.
+> Of course in our daily work we would always ensure that we pull before we start work and push when we are done.
+{: .callout}
+
+Now if we try to pull the remote changes we have a conflict:
+
+~~~
+git pull origin main
+~~~
+{: .language-bash}
+
+~~~
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 3), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), 754 bytes | 754.00 KiB/s, done.
+From github.com:PaulHancock/symmetrical-octo-parakeet
+   91ba8c2..4a180ae  main     -> origin/main
+Auto-merging mymodule/sky_sim.py
+CONFLICT (content): Merge conflict in mymodule/sky_sim.py
+Automatic merge failed; fix conflicts and then commit the result.
+~~~
+{: .output}
+
+The `git pull` command updates the local repository to include those changes already included in the remote repository.
+After the changes from the remote branch have been fetched, Git detects that changes made to the local copy overlap with those made to the remote repository, and therefore refuses to merge the two versions to stop us from trampling on our previous work.
+
+The status of our repository is now broken as can be seen from `git status`:
+~~~
+git status
+On branch main
+Your branch and 'origin/main' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+	both modified:   sky_sim.py
+~~~
+{: .output}
+
+
+The conflict is marked in in the affected file:
+
+~~~
+# Determine Andromeda location in ra/dec degrees
+
+# from wikipedia
+<<<<<<< HEAD
+ra = '00:42:44.2'
+dec = '41:16:08'
+=======
+ra = '00:42:44.4'
+dec = '41:16:10'
+>>>>>>> 4a180aeb4955e4af97cfef3a2831ad8029ceae1d
+
+# convert to decimal degrees
+from math import *
+~~~
+{: .language-python}
+
+Our change is preceded by `<<<<<<< HEAD`.
+Git has then inserted `=======` as a separator between the conflicting changes and marked the end of the content downloaded from GitLab with `>>>>>>>`.
+(The string of letters and digits after that marker identifies the commit we've just downloaded.)
+
+It is now up to us to edit this file to remove these markers and reconcile the changes.
+We can do anything we want: keep the change made in the local repository, keep the change made in the remote repository, write something new to replace both, or get rid of the change entirely.
+
+> ## Resolve the conflict
+> For now, choose one of the two edits to be correct and fix the file accordingly.
+>
+> Don't forget to remove the `<<<` `==` and `>>` lines!
+>
+> When you have saved the merged version of the file you'll have to add the changes using `git add sky_sim.py`.
+>
+{: .challenge}
+
+If we now run `git status` we should see:
+~~~
+git status
+On branch main
+Your branch and 'origin/main' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+	modified:   sky_sim.py
+~~~
+{: .output}
+
+And typing `git commit` will finish our merge with a default message:
+~~~
+git commit
+[main c526818] Merge branch 'main' of github.com:PaulHancock/symmetrical-octo-parakeet
+~~~
+{: .output}
+
+Now we can push our changes to GitHub with `git push origin main` and we will have fixed the conflict and synchronized both instances of the repository.

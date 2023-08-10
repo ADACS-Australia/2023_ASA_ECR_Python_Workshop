@@ -120,7 +120,7 @@ LOCATION
   </tr>
   <tr>
    <td>Melbourne University</td>
-   <td>September 25th - 29th</td>
+   <td>September 25th - 28th</td>
    <td>link</td>
   </tr>
 </table>

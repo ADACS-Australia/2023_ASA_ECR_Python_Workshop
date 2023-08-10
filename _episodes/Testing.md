@@ -5,9 +5,11 @@ exercises: 20
 questions:
 - "Why should I write tests?"
 - "How do I write tests?"
+- "How and where do I run tests?"
 objectives:
 - "Be able to write tests"
 - "Be able to run tests with pytest"
+- "Create a github action to run your tests automatically"
 keypoints:
 - "Testing reduces the number of bugs"
 - "If you don't test it, it might be broken"
@@ -18,6 +20,7 @@ keypoints:
 > Finding your bug is a process of confirming the many things that you believe are true — until you find one which is not true.
 > 
 > — Norm Matloff
+{: .quote}
 
 The only thing that people write less than documentation is test code.
 

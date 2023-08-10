@@ -164,8 +164,10 @@ episode_order:
   - GroupProject
   - VersionControl
   - GitHub
+  - GitBranching
   - Testing
-  - GitWorkFlow
+  - GitWorkflows
+  - PullRequestsCodeReview
   - Documentation
   - Debugging
   - BenchmarkingAndProfiling

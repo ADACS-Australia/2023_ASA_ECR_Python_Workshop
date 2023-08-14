@@ -53,4 +53,57 @@ This is called merging, and it's really powerful, but has a risk of causing conf
 > Checkout your main branch before moving on.
 {: .challenge}
 
+
+> ## Merge your branch back into main
+> Checkout your `main` branch.
+>
+> Merge changes from your `feature-1` branch using:
+> ~~~
+> git merge feature-1
+> ~~~
+> {: .language-bash}
+>
+> You will (hopefully) get a message showing the files which were changed during the merge.
+> If there are no conflicts then git will just add the commits from the `feature-1` branch to your main branch.
+> We'll explore the case of conflicts in a latter lesson.
+>
+> Confirm that you have commits to push using `git status` and then push these to github.
+>
+> Now that you have all your changes on GitHub you don't need your local feature branch so you can delete it with:
+> ~~~
+> git branch -D feature-1
+> ~~~
+> {: .language-bash}
+>
+> Head to GitHub and check that all your changes have been included on the main branch.
+{: .challenge}
+
 In the next lesson we'll explore how we can incorporate branches into our workflow.
+
+## Consolidating Changes
+
+**Merging vs Rebasing**
+
+In essence, both `git merge` and `git rebase` achieve the same thing, that is integrating changes from one branch into another branch.
+However, how this is done differs:
+1. `git merge` creates a new commit that integrates the changes from branch a (e.g. `main`) into branch b (e.g. `feature`). The existing branches are not changed in any way.
+
+2. `git rebase` moves the entire branch b (ie `feature`) to the tip of branch a (ie `main`), effectively incorporating all changes from branch a and leaving you with a linear history. Rebasing **rewrites** your project history!
+
+The image below visualizes the difference between `git merge` and `git rebase`.
+We will look at using both, but to read a good comparison visit the [Atlassian Merging vs. Rebasing page](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
+
+
+![gitlab create merge request](../fig/MergeVsRebase.png)
+
+### Rebase 
+
+With GitLab you can:
+1. rebase from the command line, automatically or interactively, or
+2. rebase from the UI
+
+![gitlab rebase overview](https://docs.gitlab.com/ee/topics/git/img/git_rebase_v13_5.png)
+
+> ## Remember: Rebasing rewrites your history
+> You should not rebase a shared branch as this can lead to complex merge issues.
+{: .callout}

@@ -4,10 +4,13 @@ teaching: 20
 exercises: 0
 questions:
 - "How should I work with Git branches?"
+- "How can I use GitHub collaboratively?"
 objectives:
 - "Understand git workflows"
+- "Fix a bug using a standard development cycle"
 keypoints:
 - "Choose a workflow that suits your project"
+- "Use GitHub issue tracker to keep track of bugs and features"
 ---
 ## [Git workflows](https://www.atlassian.com/git/tutorials/comparing-workflows)
 
@@ -335,11 +338,51 @@ We already have a function called `clip_to_radius` which is currently not being 
 >
 > Additionally:
 > - modify the rest of `sky_sim.py` so that it will call `clip_to_radius` on the generated data points before saving them
-> - for now ignore the fact that less than N points are being generated.
+> - *for now* ignore the fact that less than N points are being generated,
+> - *for now* use a euclidean distance rather than a great circle distance.
 >
 > Commit your changes to the feature branch and push to GitHub, including the issue number in the commit message.
 >
 > Comment in the related issue that you've fixed the bug and are waiting for it to be merged.
 {: .challenge}
+
+
+> ## Example bug fix
+> ~~~
+> def crop_to_circle(ras, decs, ref_ra, ref_dec, radius):
+>     """
+>     Crop an input list of positions so that they lie within radius of
+>     a reference position
+> 
+>     Parameters
+>     ----------
+>     ras,decs : list(float)
+>         The ra and dec in degrees of the data points
+>     ref_ra, ref_dec: float
+>         The reference location
+>     radius: float
+>         The radius in degrees
+>     Returns
+>     -------
+>     ras, decs : list
+>         A list of ra and dec coordinates that pass our filter.
+>     """
+>     ra_out = []
+>     dec_out = []
+>     for i in range(len(ras)):
+>         if (ras[i]-ref_ra)**2 + (decs[i]-ref_dec)**2 < radius**2:
+>             ra_out.append(ras[i])
+>             dec_out.append(ras[i])
+>     return ra_out, dec_out
+> 
+>
+> def make_positions(ra,dec, nsrc=NSRC):
+>     ...
+>     # apply our filter
+>     ras, decs = crop_to_circle(ras,decs)
+>     return ras, decs
+> ~~~
+> {: .language-python}
+{: .solution}
 
 Now that we have have a bug fix in a feature we'll work with a pull request to get the changes incorporated into our `dev` branch.

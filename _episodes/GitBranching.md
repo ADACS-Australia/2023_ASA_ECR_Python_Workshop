@@ -49,5 +49,8 @@ This is called merging, and it's really powerful, but has a risk of causing conf
 > Use `git checkout` to swap between your two branches and view the history (`git log`) and content of the `sky_sim.py` file for each branch.
 >
 > When you are happy with the changes push your new branch to github.
-> 
+>
+> Checkout your main branch before moving on.
 {: .challenge}
+
+In the next lesson we'll explore how we can incorporate branches into our workflow.

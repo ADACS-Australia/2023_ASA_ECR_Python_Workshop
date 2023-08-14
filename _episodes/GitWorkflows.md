@@ -261,3 +261,85 @@ Now we can push our changes to GitHub with `git push origin main` and we will ha
 >>
 > From now on, you should only make feature branches from `dev`, not from `main`.
 {: .challenge}
+
+
+## Using GitHub to manage your git flow
+A common lifecycle for software development is as follows:
+- Identify a bug or new feature,
+- Create an issue describing the bug/feature, 
+- Discuss the bug/feature with your team,
+- Make a feature branch linked to the issue,
+- Commit to the branch to resolve the issue,
+- Create a pull request,
+- Merge the pull request,
+- Close the related issues.
+
+GitHub provides two collaborative tools that make this process easier:
+- [Issue tracker](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues) to track ideas, feedback, tasks, or bugs.
+- [Pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to manage merging branches ([lesson]({{page.root}}{% link _episodes/PullRequestsCodeReview.md %}))
+
+### GitHub issue tracker
+In my opinion this is probably the most useful collaborative tool for software projects.
+Open the "Issues" tab of your repository.
+Below is an example of a mature repository that has been worked on for a number of years:
+
+![GitHub issues tab]({{page.root}}{% link fig/GitHubIssuesTab.png%})
+
+In the above we can see:
+- Each issue has a name and unique id (eg #200)
+- Issues can have tags associated with them (eg, 'bug', 'question', 'enhancement')
+- Issues are discussions where people can provide information (see the chat bubbles)
+- Issues can be assigned to one or more people (see the person icon)
+
+When an issue is created the repository owner will get a notification.
+Additionally, people involved in the issue will be notified when someone comments on or changes the status of the issue.
+
+The unique ID assigned to each issue can be used to create links to that issue:
+- in another issue
+- in the message of a commit
+- in a pull request.
+
+> ## Create an issue
+> Say we have identified a bug in `sky_sim.py`.
+> The bug is that we generate positions within a box around a central location, but we actually want the positions to be within some **radius**.
+>
+> Do the following:
+> 1. Head to your GitHub repo and open a new issue
+> 1. Provide a short name and description for this issue
+> 1. Take a screen shot (or copy this [image]({{page.root}}{%link fig/POC_Catalog.png%}) demonstrating the problem and post in a comment for the issue.
+> 1. Assign yourself as the assignee for the issue
+> 1. Choose the label 'bug'
+>
+{: .challenge}
+
+> ## Create a branch related to this issue
+> - Navigate to the above issue and press "Create a branch" from the Development tab on the right panel.
+> - Click "Change branch source" and select your `dev` branch.
+> - Accept the default branch name.
+> - Checkout the branch locally using the suggested commands from GitHub:
+> ~~~
+> git fetch origin
+> git checkout <branch name>
+> ~~~
+> {: .language-bash}
+>
+{: .challenge}
+
+Now you can work on fixing the bug by making changes locally and committing them to the feature branch.
+We already have a function called `clip_to_radius` which is currently not being used (and doesn't do anything).
+
+> ## Fix the bug
+> In your local repo fill out the `clip_to_radius` function so that it will:
+> - accept `np.array`s of ra/dec, a reference ra and dec, a radius
+> - return only the positions within `radius` of the reference location
+>
+> Additionally:
+> - modify the rest of `sky_sim.py` so that it will call `clip_to_radius` on the generated data points before saving them
+> - for now ignore the fact that less than N points are being generated.
+>
+> Commit your changes to the feature branch and push to GitHub, including the issue number in the commit message.
+>
+> Comment in the related issue that you've fixed the bug and are waiting for it to be merged.
+{: .challenge}
+
+Now that we have have a bug fix in a feature we'll work with a pull request to get the changes incorporated into our `dev` branch.

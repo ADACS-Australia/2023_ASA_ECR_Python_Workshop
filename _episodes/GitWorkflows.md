@@ -1,7 +1,7 @@
 ---
 title: "Git workflows"
-teaching: 20
-exercises: 0
+teaching: 30
+exercises: 40
 questions:
 - "How should I work with Git branches?"
 - "How can I use GitHub collaboratively?"

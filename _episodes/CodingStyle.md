@@ -1,7 +1,7 @@
 ---
 title: "Coding Style"
-teaching: 40
-exercises: 20
+teaching: 45
+exercises: 45
 questions:
 - "Is my personal coding style ok?"
 - "Should I try to change my style?"
@@ -202,5 +202,4 @@ Let's revisit our proof of concept code and apply the above structure.
 > ## Use functions
 > - Update POC to use two functions: one to generate the positions, and one to save them to a file
 > - Have a very short "main" clause to run the code.
-> - `git commit` with a useful message when you are done
 {: .challenge}

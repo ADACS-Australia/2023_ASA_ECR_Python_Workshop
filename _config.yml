@@ -157,28 +157,32 @@ exclude:
 highlighter: rouge
 
 episode_order:
+# Day 1
   - Setup
   - BestPracticesInComputing
   - ProjectStructure
+  - CodingStyle
   - PythonPackages
   - GroupProject
+# Day 2
   - VersionControl
   - GitHub
   - GitBranching
-  - Testing
   - GitWorkflows
   - PullRequestsCodeReview
+  - Testing
+# Day 3
   - Documentation
   - Debugging
+# Day 4
   - BenchmarkingAndProfiling
   - Optimization
   - ParallelComputing
+# Day 5
   - SQLinPython
   - Pandas
 
 
-  # - CodingStyle
-  # - DependencyManagement
-  # - PublishingCode
-  # - FunctionsClassesAndOO
-  # - IDEs
+# - DependencyManagement
+# - PublishingCode
+# - IDEs

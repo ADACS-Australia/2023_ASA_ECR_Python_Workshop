@@ -250,21 +250,14 @@ Now we can push our changes to GitHub with `git push origin main` and we will ha
 > - If the conflicts are stylistic churn (e.g. tabs vs. spaces), establish a project convention that is governing and use code style tools (e.g. `htmltidy`, `black`, etc.) to enforce, if necessary.
 {: .callout}
 
-
 > ## Setup your repo to use GitFlow
 > From your main branch create a development branch called `dev` and push it to github.
 > ~~~
+> git branch dev
+> git checkout dev
 > git push --set-upstream origin dev
 > ~~~
 > {: .language-bash}
->
-> Move your (not yet merged) feature branch `feature-1` into the `dev` branch using `git rebase`:
-> ~~~
-> git checkout feature-1
-> git rebase dev
-> git push
-> ~~~
-> {: .language-bash}
->
+>>
 > From now on, you should only make feature branches from `dev`, not from `main`.
 {: .challenge}

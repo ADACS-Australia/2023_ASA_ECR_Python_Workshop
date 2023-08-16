@@ -1,7 +1,7 @@
 ---
 title: "Documentation"
-teaching: 15
-exercises: 15
+teaching: 30
+exercises: 45
 questions:
 - "Why would I document my code?"
 - "How do I document my code?"

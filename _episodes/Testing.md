@@ -9,7 +9,6 @@ questions:
 objectives:
 - "Be able to write tests"
 - "Be able to run tests with pytest"
-- "Create a github action to run your tests automatically"
 keypoints:
 - "Testing reduces the number of bugs"
 - "If you don't test it, it might be broken"

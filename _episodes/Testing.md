@@ -1,7 +1,7 @@
 ---
 title: "Testing"
 teaching: 20
-exercises: 20
+exercises: 30
 questions:
 - "Why should I write tests?"
 - "How do I write tests?"
@@ -45,7 +45,7 @@ In our `sky_sim` project we have a function called `get_radec` which accepts no 
 Let's try writing a test for this function.
 The *desired* behavior of the function can be summarized as:
 ~~~
-get_radec() = (14.215420962967535, 41.26916666666666)
+get_radec() = (14.215420962967535, 41.26916666666667)
 ~~~
 {: .language-python}
 

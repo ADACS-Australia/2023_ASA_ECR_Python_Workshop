@@ -1,7 +1,7 @@
 ---
 title: "Automation with GitHub"
-teaching: 0
-exercises: 0
+teaching: 15
+exercises: 30
 questions:
 - "What can I automate?"
 - "How can GitHub help with automation?"
@@ -60,7 +60,7 @@ You can write custom actions from scratch but there are a large number of templa
 > - Change the filename to be `python-build-test.yml`
 > - Change the `name` on line 4 to be "Python build and test"
 > - Change line 8 to be `["main","dev"]`
-> - Change line 10 to be `"all"`
+> - Change line 10 to be `[ "main", "dev" ]`
 > - Change line 19 by removing "3.11"
 > - Add `pip install .` before line 32 so that we install our module
 > - Comment out lines 33-38 which perform Linting with flake8
@@ -78,7 +78,7 @@ You can write custom actions from scratch but there are a large number of templa
 >   push:
 >     branches: [ "main", "dev" ]
 >   pull_request:
->     branches: all
+>     branches: [ "main", "dev" ]
 > 
 > jobs:
 >   build:
@@ -133,3 +133,41 @@ If your action contains multiple jobs (usually because you have a matrix set up)
 The repo owner will be notified every time an action fails, and again when an action is successful after a failure.
 Subsequent successes don't send emails.
 
+GitHub actions are run either when you make a push to the repo (or selected branch) or when you create a pull request into a selected branch.
+We set this up in the following lines of our job file:
+~~~
+on:
+  push:
+    branches: [ "main", "dev" ]
+  pull_request:
+    branches: [ "main", "dev" ]
+~~~
+{: .output}
+
+The action that we ran previously was triggered by us pushing to the main branch.
+Let's now make a pull request from the `dev` to `main` branch to see how actions work with pull requests.
+
+> ## Make a PR to merge `dev` with `main`
+> 1. Create a new pull request to merge our `dev` branch into the `main` branch.
+> 1. Observe our build/test action starting, running, and then completing from the PR page.
+> 1. Once complete, click on the "checks" tab and see the jobs that were run and their status.
+{: .challenge}
+
+You should see something like the following:
+![Action Startup]({{page.root}}{%link fig/GitHubPRActionStartup.png%})
+![Action Complete]({{page.root}}{%link fig/GitHubPRActionComplete.png%})
+Once the jobs complete successfully they will be folded up so you don't see them.
+If any of the checks pass then you'll see a red label and a link to the failed job.
+If a job fails then you can update your code/documentation/job to remedy the situation and make another commit to the branch you are trying to merge.
+Each push to the branch being merged will cause the jobs to be re-run.
+
+GitHub will let you merge a PR with failed checks, but the normal life cycle of development includes having working tests before your accept the pull request.
+
+## What else can we use GitHub actions for?
+There are a large number of templates in the actions gallery which you can explore.
+Here are some use cases that might be relevant to you:
+- compile documentation
+- build your code an push it to pypi.org
+- create a website for your repository (eg, [the pages for this workshop](https://github.com/ADACS-Australia/2023_ASA_ECR_Python_Workshop/blob/gh-pages/.github/workflows/website.yml))
+- deploy your app to cloud infrastructure
+- run security checks against your code or web-app.

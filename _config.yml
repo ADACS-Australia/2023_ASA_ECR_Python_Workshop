@@ -171,6 +171,7 @@ episode_order:
   - GitWorkflows
   - PullRequestsCodeReview
   - Testing
+  - GitHubActions
 # Day 3
   - Documentation
   - Debugging

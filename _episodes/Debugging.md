@@ -120,13 +120,144 @@ How can we catch these sorts of errors?
 The answer is [testing!]({{page.root}}{%link _episodes/Testing.md%}): we create tests for our functions that raise exceptions when something isn't doing what we intend it to do.
 
 ## Getting feedback from your code
-lots of `print` statements
+There are two key things you need to know when debugging your code:
+1. What problem has occurred
+2. Where the problem has occurred
 
-logging module with .debug, .info, .error
+A simple method for determining the above is to have your code be chatty or verbose during it's execution.
+To achieve this you can scatter a some `print` statements throughout your code so that you know what it's up to and have a chance at figuring out where an error occurs.
 
-python debugger and VSCode examples
+For example you can add some header/footer print statements to your functions:
+~~~
+def get_radec():
+    ...
+    print("Fetching reference coordinates")
+    ...
+    print("Done")
+    return ra, dec 
+~~~
+{: .language-python}
 
-## Not repeating errors
-tests
+If you find that some error occurs in this function then you might add some extra print statements to tease out the problem:
+~~~
+def get_radec():
+    ...
+    print("Fetching reference coordinates")
+    # from wikipedia
+    andromeda_ra = '00:42:44.3'
+    andromeda_dec = '41:16:09'
+    print(f"Input is: {ra}, {dec}")
 
-mocking
+    d, m, s = andromeda_dec.split(':')
+    dec = int(d)+int(m)/60+float(s)/3600
+    print(f"Dec is: {d} deg, {m} min, {s} sec -> {dec} degrees")
+
+    h, m, s = andromeda_ra.split(':')
+    ra = 15*(int(h)+int(m)/60+float(s)/3600)
+    print(f"RA is: {h} hrs, {m} min, {s} sec -> {ra} hours")
+    ra = ra/math.cos(dec*math.pi/180)
+    print(f"RA is {ra} degrees")
+    return ra, dec
+~~~
+{: .language-python}
+
+This would help you catch errors where a declination of "-00:12:15" is converted into a positive value.
+Once you solve the problem, you probably don't want such a chatty program, so you'd go back and delete most of the print statements.
+This can cause a lot of churn in your code, and can result in the creation of new bugs (mostly minor ones like unintended ouput, but still bugs).
+There are a few tools that we can use to replace the above strategy:
+1. A [logging](https://docs.python.org/3/library/logging.html) framework that let's us choose how verbose our program will be,
+2. A [test](https://docs.pytest.org/en/7.4.x/) framework to identify which functions are misbehaving,
+3. A [debugging](https://docs.python.org/3/library/pdb.html) tool that will allow us to step through the execution of our code and explore variables as we go.
+
+## Logging with `logging`
+The [`logging`](https://docs.python.org/3/library/logging.html) module provides you with a simple yet powerful way of communicating the state of your program as it's running.
+
+Setting up a logger is as simple as:
+~~~
+import logging
+
+# configure logging
+logging.basicConfig(format="%(name)s:%(levelname)s %(message)s", level=logging.INFO)
+log = logging.getLogger("<my module>")
+
+# use the logger
+log.debug('This is a debug message')
+log.info('This is an info message')
+log.warning('This is a warning message')
+log.error('This is an error message')
+log.critical('This is a critical message')
+~~~
+{: .language-python}
+
+Your `log` object will have five levels of logging with intended use as follows:
+
+| Level | Intended use |
+| -- | -- |
+| DEBUG | Detailed information, typically of interest only when diagnosing problems. |
+| INFO | Confirmation that things are working as expected. |
+| WARNING | An indication that something unexpected happened, or indicative of some problem in the near future (e.g. ‘disk space low’). The software is still working as expected. |
+| ERROR | Due to a more serious problem, the software has not been able to perform some function. Typically followed by raising an exception. |
+| CRITICAL | A serious error, indicating that the program itself may be unable to continue running. Typically followed by `sys.exit(1)` or similar. |
+
+With the above hierarchy you can tell your logger which level of logs should be shown to the user.
+Running `log.set_level(logging.WARNING)` will cause `DEBUG` and `INFO` level messages to be supresed, and `WARNING`, `ERROR`, and `CRITICAL` messages to be printed. 
+You can change the logging state at any time.
+
+By default the logging module sends all messages to the STDERR stream, but you can redirect this to STDOUT, a file, or a combination of the above, by using a [handler](https://docs.python.org/3/howto/logging.html#handlers).
+
+Something to note about the logging module, is that it will add a compute overhead to your program, even if you set the logging level to be `ERROR` or `CRITICAL`.
+Essentially, your program is spending time creating a string to send to the logger no matter the logging level.
+If you want to only execute some code when the logging level is set to `DEBUG` you can query the logging state as follows:
+~~~
+if log.isEnabledFor(logging.DEBUG):
+   ... # Do debugging type things that may take a while
+~~~
+{: .language-python}
+
+> ## Make some logs
+> TODO challenge using the logging module
+{: .challenge}
+
+## Debugging with `pdb`
+Even after extensive logging and testing, you will eventually end up in the situation where you just want to pause your program at some point and have an explore of the current state to see if things are as expected.
+This is where a debugging tool like python debugger ([`pdb`](https://docs.python.org/3/library/pdb.html)) comes in very handy.
+
+The debugger itself is rather tedious to use (see [example](https://realpython.com/python-debugging-pdb/)) because you need to edit your code to import the debugger and choose where you want stop and look around.
+Instead of learning how to do this the hard way we'll instead use a VSCode plugin which takes the tedium away and gives us a much nicer interface.
+
+Other IDEs have a similar interface which we'll demonstrate below:
+![VSCode debugger]({{page.root}}{% link fig/VSCodeDebuggingWindow.png %})
+
+In the above example we have pressed the debugger button, selected a file to run, and then let the errors happen.
+When an exception is raised the debugger will pause the program and give you the opportunity to explore the state of all the variables using the viewer in the top left, or by writing code int the console on the bottom right.
+
+In the lower left you can see a panel that shows the breakpoints that are going to cause the debugger to stop and enter exploration mode.
+By default this is set to just "Uncaught Exceptions" but you can add extra break points by clicking to the left of a line of code (it will create a red circle).
+(Make sure that this is a line of code that python executes and not a blank line or line with only comments.)
+
+When you run your code with a breakpoint enabled the code will stop at the given line.
+From here you have a set of options shown in the following tool:
+![Debug panel]({{page.root}}{%link fig/VSCodeDebuggingPanel.png%}){: .width=150}
+The buttons are, in order: 
+| button | action |
+| -- | -- |
+| pause | pause the debugger here (changes to continue when paused) |
+| step over | execute the current line of code and pause on the next |
+| step into | move into the function, and execute one line of code |
+| step out | finish executing all the code in the current function and continue |
+| stop | exit (interrupt) the program |
+
+A typical debugging run would look like:
+1. Identify a line that is known to be working, just before your suspected bug
+2. Create a break point on this line and run the debugger
+3. Explore the state of your program at this point in the code, confirm things aren't broken
+4. If things are broken goto 1
+5. Press the step over / step into buttons to execute a single line of code at a time
+6. Goto 3
+7. Eventually you find something that is not as expected and you have your bug!
+
+Now you do the following:
+1. Create a test that fails on this bug
+2. Modify the code until your test passes
+3. ?
+4. Profit

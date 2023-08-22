@@ -99,6 +99,9 @@ From this tab you see a diff of each file, and have the ability to either give o
 
 Even if you were not requested as a reviewer, you can provide your 2c.
 
+If the reviewer request changes (as opposed to just making comments) then GitHub will block the merge until the reviewer marks the changes as accepted.
+
+![GitHub PR merge blocked]({{page.root}}{%link fig/GitHubPRCannotMerge.png %})
 
 > ## Review your PR
 > 1. Navigate to the "Files Changed" tab of your pull request.

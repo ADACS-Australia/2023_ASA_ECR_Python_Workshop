@@ -1,17 +1,18 @@
 ---
 title: "Debugging tactics"
-teaching: 90
-exercises: 0
+teaching: 60
+exercises: 30
 questions:
 - "What is debugging?"
 - "How can I debug a problem?"
 - "What tools are available to help me with debugging?"
 objectives:
 - "Understand python traceback messages"
-- "Learn some common debugging techniques"
+- "Learn to use the logging module"
 - "Learn to use a debugging tool"
 keypoints:
 - "Best practice coding will reduce bugs and their severity"
+- "Logging is a good way to keep track of what your program is doing"
 - "There will always be bugs - don't feel bad"
 - "Use debugging tools"
 ---
@@ -215,15 +216,25 @@ if log.isEnabledFor(logging.DEBUG):
 {: .language-python}
 
 > ## Make some logs
-> TODO challenge using the logging module
+> Modify your `sky_sim.py` code to make use of the logging module.
+>
+> 1. import the logging module and set up a logger called `mylogger`
+> 2. set the default logging level to be `logging.INFO`
+> 3. within each function write a `DEBUG` level note when you are entering/exiting the function
+> 4. within the `main` function, replace the `print` statements with logs at the `INFO` level
+> 5. Run your code and view the output
+> 6. Change the logging level to be `DEBUG` and re-run your code
+> 7. (Extension) Add a command line argument `-v` which will change the logging level to `DEBUG`
+> 
 {: .challenge}
 
-## Debugging with `pdb`
+## Debugging with `pdb` and VSCode
 Even after extensive logging and testing, you will eventually end up in the situation where you just want to pause your program at some point and have an explore of the current state to see if things are as expected.
 This is where a debugging tool like python debugger ([`pdb`](https://docs.python.org/3/library/pdb.html)) comes in very handy.
 
 The debugger itself is rather tedious to use (see [example](https://realpython.com/python-debugging-pdb/)) because you need to edit your code to import the debugger and choose where you want stop and look around.
 Instead of learning how to do this the hard way we'll instead use a VSCode plugin which takes the tedium away and gives us a much nicer interface.
+(The VSCode debugger isn't using `pdb` but rather `debugpy` which provides all the same functionality.)
 
 Other IDEs have a similar interface which we'll demonstrate below:
 ![VSCode debugger]({{page.root}}{% link fig/VSCodeDebuggingWindow.png %})
@@ -238,7 +249,9 @@ By default this is set to just "Uncaught Exceptions" but you can add extra break
 When you run your code with a breakpoint enabled the code will stop at the given line.
 From here you have a set of options shown in the following tool:
 ![Debug panel]({{page.root}}{%link fig/VSCodeDebuggingPanel.png%}){: .width=150}
+
 The buttons are, in order: 
+
 | button | action |
 | -- | -- |
 | pause | pause the debugger here (changes to continue when paused) |
@@ -261,3 +274,17 @@ Now you do the following:
 2. Modify the code until your test passes
 3. ?
 4. Profit
+
+
+> ## explore the `get_ra_dec` function
+> 1. Within your `sky_sim.py` file, set a breakpoint within the `get_ra_dec` function on the line where the ra is being assigned.
+> 2. Run the VSCode debugger on this file.
+> 3. When your code is paused by the debugger, use the debug pane to explore what variables exist and their values
+> 4. Use the 'step over' button to work through the function, noting how the variables change value
+>
+> Test this function on a negative declination:
+> 1. Set a breakpoint as above
+> 2. After the declination string is assigned, use the debug panel to change it's value to be '-00:12:15'
+> 3. Step through the lines of the program as before and see if you can spot the mistake that is being made
+>
+{: .challenge}

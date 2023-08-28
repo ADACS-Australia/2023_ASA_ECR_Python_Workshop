@@ -232,13 +232,148 @@ Note that the `sacct` system only polls the jobs at some interval (30seconds?) a
 This polling interval also means that your jobs that run overtime will not always be cancelled exactly at the wall time requested (see the example above).
 
 ## Profiling
-
+Profiling is much like benchmarking except that you are interested in a more fine grained view of your resource usage.
+Typically you'll be looking to measure the resource usage as a function of time or, even better, of lines of code executed.
+Profiling tools will add a compute/memory overhead to your software, but should ultimately track their own resource usage and subtract that from the reported amount.
+You can use most profiling tools for benchmarking by taking the peak/total resource usage.
 We'll be using the [scalene](https://pypi.org/project/scalene/) package to profile our python code.
 Unlike other profiling systems, scalene doesn't require you to edit the source code as part of the profiling process.
 Instead you simply run `scalene your_prog.py` and it will run your code and deliver a report.
 
+
+
 > ## Guess what is slow?
-> Before we run/view the output from `scalene` have a read through the code and have a guess at what you think will be the slowest part.
+> Before we run/view the output from `scalene` have a read through the following code and have a guess at what you think will be the slowest part.
+>
+> > ## `sky_sim.py`
+> > ~~~
+> > #! /usr/bin/env python
+> > """
+> > Simulate a catalog of stars near to the Andromeda constellation
+> > """
+> > 
+> > import argparse
+> > import math
+> > import random
+> > 
+> > NSRC = 5_000_000
+> > 
+> > 
+> > def get_radec():
+> >     """
+> >     Generate the ra/dec coordinates of Andromeda
+> >     in decimal degrees.
+> > 
+> >     Returns
+> >     -------
+> >     ra : float
+> >         The RA, in degrees, for Andromeda
+> >     dec : float
+> >         The DEC, in degrees for Andromeda
+> >     """
+> >     # from wikipedia
+> >     andromeda_ra = '00:42:44.3'
+> >     andromeda_dec = '41:16:09'
+> > 
+> >     d, m, s = andromeda_dec.split(':')
+> >     dec = int(d)+int(m)/60+float(s)/3600
+> > 
+> >     h, m, s = andromeda_ra.split(':')
+> >     ra = 15*(int(h)+int(m)/60+float(s)/3600)
+> >     ra = ra/math.cos(dec*math.pi/180)
+> >     return ra, dec
+> > 
+> > 
+> > def crop_to_circle(ras, decs, ref_ra, ref_dec, radius):
+> >     """
+> >     Crop an input list of positions so that they lie within radius of
+> >     a reference position
+> > 
+> >     Parameters
+> >     ----------
+> >     ras,decs : list(float)
+> >         The ra and dec in degrees of the data points
+> >     ref_ra, ref_dec: float
+> >         The reference location
+> >     radius: float
+> >         The radius in degrees
+> >     Returns
+> >     -------
+> >     ras, decs : list
+> >         A list of ra and dec coordinates that pass our filter.
+> >     """
+> >     ra_out = []
+> >     dec_out = []
+> >     for i in range(len(ras)):
+> >         if (ras[i]-ref_ra)**2 + (decs[i]-ref_dec)**2 < radius**2:
+> >             ra_out.append(ras[i])
+> >             dec_out.append(ras[i])
+> >     return ra_out, dec_out
+> > 
+> > 
+> > def make_positions(ra, dec, nsrc=NSRC):
+> >     """
+> >     Generate NSRC stars within 1 degree of the given ra/dec
+> > 
+> >     Parameters
+> >     ----------
+> >     ra,dec : float
+> >         The ra and dec in degrees for the central location.
+> >     nsrc : int
+> >         The number of star locations to generate
+> > 
+> >     Returns
+> >     -------
+> >     ras, decs : list
+> >         A list of ra and dec coordinates.
+> >     """
+> >     ras = []
+> >     decs = []
+> >     for _ in range(nsrc):
+> >         ras.append(ra + random.uniform(-1, 1))
+> >         decs.append(dec + random.uniform(-1, 1))
+> >     # apply our filter
+> >     ras, decs = crop_to_circle(ras, decs, ra, dec, 1)
+> >     return ras, decs
+> > 
+> > 
+> > def skysim_parser():
+> >     """
+> >     Configure the argparse for skysim
+> > 
+> >     Returns
+> >     -------
+> >     parser : argparse.ArgumentParser
+> >         The parser for skysim.
+> >     """
+> >     parser = argparse.ArgumentParser(prog='sky_sim', prefix_chars='-')
+> >     parser.add_argument('--ra', dest='ra', type=float, default=None,
+> >                         help="Central ra (degrees) for the simulation location")
+> >     parser.add_argument('--dec', dest='dec', type=float, default=None,
+> >                         help="Central dec (degrees) for the simulation location")
+> >     parser.add_argument('--out', dest='out', type=str, default='catalog.csv',
+> >                         help='destination for the output catalog')
+> >     return parser
+> > 
+> > 
+> > if __name__ == "__main__":
+> >     parser = skysim_parser()
+> >     options = parser.parse_args()
+> >     if None in [options.ra, options.dec]:
+> >         ra, dec = get_radec()
+> >     else:
+> >         ra = options.ra
+> >         dec = options.dec
+> > 
+> >     ras, decs = make_positions(ra, dec)
+> >     # now write these to a csv file for use by my other program
+> >     with open(options.out, 'w') as f:
+> >         for i in range(len(ras)):
+> >             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
+> >     print(f"Wrote {options.out}")
+> > ~~~
+> > {: .language-python}
+> {: .solution}
 > 
 > Comment in the [etherpad]({{site.ether_pad}}).
 > Make it spicy and add a bet if you are confident.
@@ -247,9 +382,10 @@ Instead you simply run `scalene your_prog.py` and it will run your code and deli
 
 > ## view the scalene output
 > Run `scalene sky_sim.py` and view the ouput.
+> (Note that I increased the NSRC to be 5million so we would have a longer run time).
 > Scalene will create a `profile.html` file and then open it in your default browser for you to view.
 > > ## (my) profile
-> > ![scalene initial profile]({{page.root}}{% link fig/ScaleneInitialProfile.png %})
+> > ![scalene initial profile]({{page.root}}{% link fig/ProfilingScaleneInitial.png %})
 > {: .solution}
 {: .challenge}
 
@@ -272,7 +408,37 @@ Using `numpy` modules is a great way to do this.
 >
 {: .callout}
 
+Note, however, in the above output that the program spends about 60% of the total run time on line 123, which is formatting and writing the output file.
+Thus, even if numpy were magically fast at computing, we would only ever be able to reduce our run time by 40%.
+Let's move on to the next lesson [optimisation]({{page.root}}{%link _episodes/Optimization.md%}) where we can talk about what to do with the above report.
+<!-- 
 When it comes to reducing the memory footprint in python you are a bit limited, because python intentionally does the memory management for you.
 Python also likes to hang on to memory 'just in case' it might need it in the future, and it can be hard to convince python to just let it go.
 If you want to use less memory, just don't allocate it in the first place!
 By which I mean, don't copy things, use numpy arrays that, when sliced, will give you views into the same memory space rather than copies of the sub array.
+
+Line 83 in the above report is the start of a loop that is creating a new ra/dec location one item at a time, and then appending this to a python list.
+Appending to an existing list is a task that takes a long time, since python needs to allocate extra memory, assign a value, and then link that memory to the list.
+Python lists are slower to access than `numpy` arrays and do not allow for fast math operations.
+An easy optimization is to replace our python lists with `numpy` arrays.
+
+> ## Use `numpy`
+> Replace the loop starting at line 83 of the above report with a call to create numpy arrays instead of python lists.
+>
+> Rerun your profiling and see if the total run time has decreased.
+> 
+{: .challenge}
+
+At least initially you may find that your new code takes longer to run.
+This could because of the following:
+1. `import numpy as np` is not a free operation - some time is spent importing the module (but not that much)
+2. creating the numpy arrays is faster than making the lists, but indexing them in a loop (eg line 59) is slow
+3. in line 59 we convert our numpy arrays back to python lists
+
+
+> ## Use more `numpy`
+> 1. Remove the math/random libraries and use the numpy equivalent functions
+> 1. Replace all your python lists with numpy arrays
+> 1. Replace loops with numpy mask / ufuncs where possible
+>
+{: challenge} -->

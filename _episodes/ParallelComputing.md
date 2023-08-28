@@ -411,16 +411,6 @@ Here is an implementation of our `sky_sim.py` code using multiprocessing.
 > {: .language-python}
 {: .solution}
 
-> # Make a branch
-> Let's make a new branch for each of our parallel implementations.
->
-> For multiprocessing lets make a branch called `multiprocessing`:
-> ~~~
-> git branch multiprocessing
-> ~~~
-> {: .bash}
->
-{: .challenge}
 
 There are two main things that we need to do differently in this version of the code compared to our original implementation.
 Firstly note that the code is largely unchanged, except for the introduction of a new function called `make_stars_parallel`, and that we have changed the call signature of the original function to just accept `args` instead of `ra, dec, nsrc`.
@@ -562,16 +552,13 @@ return radec
 > In our description of 1-8 we missed a bunch of code.
 >
 > What does it do?
+> 
+> There are a few good practices that we should obey when doing our multiprocessing, and this is where the extra code comes in.
+> Firstly, we should plan for when things go bad.
+> If we were running our program, and the user presses <CTRL>+C, then we want the program to exit.
+> However, by default only the current process (the parent) will exit, and the others will continue on their way.
+> By wrapping our `pool.map` in a `try/except` clause we can catch the keyboard interrupt and then close the program in a nicer way.
 {: .callout}
-
-### Extra bits
-There are a few good practices that we should obey when doing our multiprocessing, and this is where the extra code comes in.
-
-Firstly, we should plan for when things go bad.
-If we were running our program, and the user presses <CTRL>+C, then we want the program to exit.
-However, by default only the current process (the parent) will exit, and the others will continue on their way.
-By wrapping our `pool.map` in a `try/except` clause we can catch the keyboard interrupt and then close the program in a nicer way.
-
 
 ### How are the processes communicating with each other?
 In our example above, the different processes don't actually share any memory.
@@ -586,7 +573,6 @@ Python uses `pickle` to do this serialization.
 The things that we need to know here is that:
 - serialization is slow (-er than just sending memory addresses)
 - a serialized object takes more memory than the underlying object
-- passing data via strings is inefficient
 
 In our example, the amount of time taken for the child processes to create the random data was much smaller than the time taken to pass the data back to the parent process.
 If we were to spread the work over many cores, it might actually take **more** time to complete the work thanks to this message passing overhead.
@@ -737,7 +723,7 @@ Let's look at how we can do that in another example.
 > {: .language-python}
 {: .solution}
 
-> # Make another branch
+<!-- > # Make another branch
 > For this version of the code lets make a branch called `mp-sharemem`:
 > ~~~
 > git branch mp-sharemem
@@ -747,7 +733,7 @@ Let's look at how we can do that in another example.
 > Note that we are now branching a branch.
 > `mp-sharemem` is branched from `multiprocessing` which is branched from `main`!
 >
-{: .challenge}
+{: .challenge} -->
 
 A quick summary of what is different this time (compared to our serial version):
 - we define a global variable (`mem_id`) which will indicate the shared memory location
@@ -771,7 +757,7 @@ Below is the process with the main changes in **bold**:
 
 Let's look at the steps that have changed.
 
-## 4 create some shared memory
+### 4 create some shared memory
 In the parent process we first create a random name for our memory obejct.
 For this I like to use the universally unique identifier `uuid` package.
 ~~~
@@ -861,7 +847,7 @@ As we create the pool, we tell it that the initializer function is `init` and th
 
 ### 8 copy data from shared memory back to local memory and de-allocate the shared memory
 Once all the child processes complete, we have all the information that we need in shared memory.
-To copyt this sharedmemory into a local numpy array we use a similar trick as before, but we then append `.copy()`.
+To copy this sharedmemory into a local numpy array we use a similar trick as before, but we then append `.copy()`.
 ~~~
             # make sure to .copy() or the data will dissappear when you unlink the shared memory
             local_radec = np.ndarray((2, nsrc), buffer=radec.buf,
@@ -882,31 +868,29 @@ Python usually complains that there was some still allocated shared memory aroun
 (And it's good practice to clear up after yourself!)
 
 > ## what about all the other code?
-> In our description of 1-8 we missed a bunch of code.
->
 > What does it do?
+> 
+> This time we have two `try` clauses.
+> The first one is to make sure that the additional processes are cleaned up when we quit the program early.
+> The second try clause is an interesting one that you might not have seen before:
+> ~~~
+>     try:
+>       ...
+>     finally:
+>         radec.close()
+>         radec.unlink()
+>         if exit:
+>             sys.exit(1)
+> ~~~
+> {: .language-pytyhon}
+> 
+> The `finally` clause is executed after everything in the `try/except/else` has been sorted out, *even if there were exceptions being thrown*.
+> This means that even if something blows up in the `try` clause, we will eventually come back to the `finally` clause and do all the cleanup.
+> Here the cleanup is to close the shared memory object (stops further access), and then unlink it (de-allocates the memory).
+> 
+> In order to ensure that this `finally` clause is hit, we move the `sys.exit(1)` from the inner `try/except` to here.
 {: .callout}
 
-### more extra bits
-This time we have two `try` clauses.
-The first one is to make sure that the additional processes are cleaned up when we quit the program early.
-The second try clause is an interesting one that you might not have seen before:
-~~~
-    try:
-      ...
-    finally:
-        radec.close()
-        radec.unlink()
-        if exit:
-            sys.exit(1)
-~~~
-{: .language-pytyhon}
-
-The `finally` clause is executed after everything in the `try/except/else` has been sorted out, *even if there were exceptions being thrown*.
-This means that even if something blows up in the `try` clause, we will eventually come back to the `finally` clause and do all the cleanup.
-Here the cleanup is to close the shared memory object (stops further access), and then unlink it (de-allocates the memory).
-
-In order to ensure that this `finally` clause is hit, we move the `sys.exit(1)` from the inner `try/except` to here.
 
 > ## How are we going?
 > Did all that sink in?
@@ -937,15 +921,6 @@ It is still possible to have each process running on the same node.
 A message passing interface ([MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface)) has been developed and implemented in many open source libraries.
 As the name suggests the focus is not on sharing memory, but in passing information between processes.
 These processes can be on the same node or different nodes of an HPC.
-
-<!-- In order for SLURM to initiate an MPI job it is essential for the user to indicate how many nodes and how many cores of each node will be used for the program.
-This is done via the `--nodes` and `--ntasks` options.
-Within a job script a user then starts the MPI part of their work using the `srun` command.
-
-~~~
-srun my_prog <args for my_prog>
-~~~
-{: .language-bash} -->
 
 The key to understanding how an MPI based code works is that all the processes are started simultaneously and then connect to a communication hub (usually called COMM_WORLD), they then execute the code.
 During code execution a processes can send/recieve messages from any/all of the other nodes.
@@ -1030,15 +1005,6 @@ Continuing our `sky_sim` example we can use MPI to acheive our simulation task.
 > {: .language-python}
 {: .solution}
 
-> # Make yet another branch
-> Since our MPI implementation isn't related to the multiprocessing ones, we'll make a new branch but this time branch off main.
-> ~~~
-> git checkout main
-> git branch mpi
-> ~~~
-> {: .bash}
->
-{: .challenge}
 
 To run the above code we use a syntx similar to xargs:
 ~~~

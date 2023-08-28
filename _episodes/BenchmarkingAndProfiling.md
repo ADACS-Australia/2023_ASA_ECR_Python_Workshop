@@ -1,7 +1,7 @@
 ---
 title: "Benchmarking and profiling"
-teaching: 15
-exercises: 15
+teaching: 30
+exercises: 30
 questions:
 - "What is benchmarking?"
 - "How is benchmarking different from profiling?"
@@ -56,6 +56,32 @@ In the context of this workshop we are mostly interested in determining the reso
 The peak RAM use and CPU usage will determine how many copies of our task we can run on a node at once, which we can then multiply by the total run time to estimate our kSU requirement.
 
 ### On your linux based machine
+
+#### Using `time`
+The program `time` will run your program and give you a very short report on how much time was taken.
+It is used as follows:
+~~~
+time python3 mymodule/sky_sim.py
+~~~
+{: .language-bash}
+and will produce output showing the real/user/sys time:
+~~~
+Wrote catalog.csv
+
+real    0m2.777s
+user    0m2.674s
+sys     0m0.102s
+~~~
+{: .output}
+
+The times are as follows:
+1. **real** is the total time of execution (stop - start) or the "wall time"
+2. **user** is how much time was spent executing the code (stop - start)*(cpu usage) or the "cpu time"
+3. **sys** is the amount of time spent executing code within the system kernel (i/o, memory allocation, networking, etc)
+
+Note: The "user" time can be larger than the "real" time if your code makes use of multiple cpu cores.
+
+#### Using `top`
 The program `top` will show you the real time cpu/ram usage for all of your running processes.
 The problem is that this is **all** your running processes, and it can be hard to keep track of the one process you are interested in.
 
@@ -89,6 +115,12 @@ When benchmarking you should:
 1. Have as few other programs running as possible,
 2. Try to make sure that your RAM use is minimal to start with, this will avoid [swapping](https://en.wikipedia.org/wiki/Memory_paging),
 3. Run your benchmark multiple times to get a confident answer, and to determine how much [caching](https://en.wikipedia.org/wiki/Cache_(computing)) is playing a role.
+
+> ## Benchmark your `sky_sim.py`
+> 1. Use `time` to record the real/user/sys run time for your code
+> 1. Use the benchmarking script above to watch the resource usage from `top` while running your code
+>
+{: .challenge}
 
 If you want to determine how much resources are going to be required to run your program on an HPC system, then your first estimate would be based on running on your local machine and the "scaling up" the results.
 Note however that this is going to be a rough estimate only, as an HPC has many more components in play than your local machine.
@@ -411,6 +443,7 @@ Using `numpy` modules is a great way to do this.
 Note, however, in the above output that the program spends about 60% of the total run time on line 123, which is formatting and writing the output file.
 Thus, even if numpy were magically fast at computing, we would only ever be able to reduce our run time by 40%.
 Let's move on to the next lesson [optimisation]({{page.root}}{%link _episodes/Optimization.md%}) where we can talk about what to do with the above report.
+
 <!-- 
 When it comes to reducing the memory footprint in python you are a bit limited, because python intentionally does the memory management for you.
 Python also likes to hang on to memory 'just in case' it might need it in the future, and it can be hard to convince python to just let it go.
@@ -441,4 +474,5 @@ This could because of the following:
 > 1. Replace all your python lists with numpy arrays
 > 1. Replace loops with numpy mask / ufuncs where possible
 >
-{: challenge} -->
+{: challenge} 
+-->

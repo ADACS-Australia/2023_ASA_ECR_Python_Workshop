@@ -1,7 +1,7 @@
 ---
 title: "Optimization"
-teaching: 15
-exercises: 15
+teaching: 30
+exercises: 30
 questions:
 - "How can I optimize my code?"
 - "What am I even optimizing for?"

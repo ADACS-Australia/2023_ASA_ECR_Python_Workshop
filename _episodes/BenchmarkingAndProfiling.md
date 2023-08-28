@@ -83,6 +83,17 @@ done
 
 The above code is in the file [benchmarking.sh]({{page.roo}}{%link code/examples/benchmark.sh%}).
 
+As with any benchmarking / profiling work, you need to consider the fact that your computer is doing more than just run your code.
+At the very least it is also running the benchmarking/profiling software, but this should incur a very small memory/cpu overhead.
+When benchmarking you should:
+1. Have as few other programs running as possible,
+2. Try to make sure that your RAM use is minimal to start with, this will avoid [swapping](https://en.wikipedia.org/wiki/Memory_paging),
+3. Run your benchmark multiple times to get a confident answer, and to determine how much [caching](https://en.wikipedia.org/wiki/Cache_(computing)) is playing a role.
+
+If you want to determine how much resources are going to be required to run your program on an HPC system, then your first estimate would be based on running on your local machine and the "scaling up" the results.
+Note however that this is going to be a rough estimate only, as an HPC has many more components in play than your local machine.
+With your rough "scaled up" estimate you can often ask for some director's time to build and run your software on an HPC with the goal of estimating the total resource requirements that you'll be requesting.
+
 ### On PBSTorque systems like Gadi
 
 Whilst it's possible to estimate the cpu/time/ram requirements by running tasks on a desktop and then "scaling up" the results, this is an unreliable method, and usually requires a buffer of uncertainty.
@@ -90,7 +101,7 @@ The best method is to run some test jobs on the target machine and then ask SLUR
 
 On an HPC system like NCI, your benchmarking is super easy.
 Every time you run a job, the output file (specified with `#PBS -o filename`) will have a resource usage report at the end.
-For example, our `first_script.sh` job has the following report:
+An example report is as follows:
 
 ~~~
 ======================================================================================
@@ -108,20 +119,8 @@ For example, our `first_script.sh` job has the following report:
 ~~~
 {: .output}
 
-I can't overstate just how amazingly convenient it is that on gadi we get these reports for all our jobs.
-Pawsey and OzStar (which use SLURM instead of PBSPro) don't do this automatically, and so users need to dig through the slurm databases to try and reconstruct the information.
 
 ## Benchmarking on SLURM systems like Pawsey and OzStar
-Benchmarking is the process of running code on a target system to determine the typical behavior or resource usage.
-Benchmarking is different from profiling, in that with profiling we want a detailed report of what our software is doing at various times with an eye to improving the program, where as benchmarking is only interested in estimating how much resources are required to run a program in it's current state.
-In the context of this workshop we are mostly interested in determining the resource usage in terms of:
-
-1. run time
-2. peak RAM use
-3. CPU utilization
-
-The peak RAM use and CPU usage will determine how many copies of our task we can run on a node at once, which we can then multiply by the total run time to estimate our kSU requirement.
-
 Whilst it's possible to estimate the cpu/time/ram requirements by running tasks on a desktop and then "scaling up" the results, this is an unreliable method, and usually requires a buffer of uncertainty.
 The best method is to run some test jobs on the target machine and then ask SLURM how much resources were used for those jobs.
 The key to this method is the `sacct` (SLURM accounting) task.

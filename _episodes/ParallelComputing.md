@@ -1,7 +1,7 @@
 ---
 title: "Parallel Computing"
-teaching: 40
-exercises: 40
+teaching: 45
+exercises: 45
 questions:
 - "What is parallel computing?"
 - "How can I do parallel computing?"
@@ -21,6 +21,14 @@ For many people parallel computing brings to mind optimization.
 Whilst optimization can often lead you down the path of parallel computing, the two are not the same.
 Parallel computing is about making use of resources while optimization is about making *better* use of the resources.
 
+> ## Play along
+> There are no explicit challenges in this lesson (well, except for this one!), because we are going to all play along at the same time.
+>
+> For the most part this will be copy/pasting from this lesson and running the program.
+>
+> Please do feel free to experiment with the code and ask questions about the implementation details.
+> 
+{: .language-python}
 
 ## Types of parallelism	
 One of the biggest advantages of using an HPC is that you will have access to a large number of processing cores.
@@ -1017,9 +1025,6 @@ mpirun -n 4 python3 sky_sim_mpi.py
 > On ubuntu you can use mpich which is installed as:
 > `sudo apt install mpich`
 >
-> If your local machine doesn't have mpi you can install it, but sometimes it can be rather tricky. 
-> Instead you might just log into gadi and run your work there.
-> `module load openmpi`
 {: .callout}
 
 Whilst we can use our COMM_WORLD to pass messages between processes, it's a very ineffective way to pass large quantities of data (see previous chat about serialization).
@@ -1112,12 +1117,12 @@ There are two inefficiencies that we have in the above code:
   - If we did some point to point communication we could tell rank 0 to start reading the rank 1 file as soon as it was ready
 
 MPI can sometimes be a much simpler approach than shared memory, even when you are working on multiple cores of the same node.
-Sometimes MPI is an absolute brain destroyer when you are trying to debug it, because all your debug messages overlap or appear out of order.
+Sometimes MPI is an absolute brain destroyer when you are trying to debug it, because all your debug messages overlap or appear out of order, though using [logging]({{page.root}}{%link _episodes/Debugging.md%}#logging-with-logging) can certainly help out here.
 
 At the end of the day you should chose a solution that will work for your use case which includes one that you can implement in a reasonable amount of time.
 (Your time is more valuable than computer time!)
 
-### Hybrid parallel processing
+## Hybrid parallel processing
 It is possible to access the combined CPU and RAM of multiple nodes all at once by making use of a hybrid processing scheme.
 In such a scheme a program will use MPI to dispatch a bunch of primary processes, one per node, which in turn control multiple worker processes within each node which share memory using OpenMP.
 
@@ -1128,11 +1133,3 @@ In such a scheme a program will use MPI to dispatch a bunch of primary processes
 There are many levels of parallelism that can be leveraged for faster throughput.
 The type of parallelism used will depend on the details of the job at hand or the amount of time that you are able and willing to invest.
 Starting with the easy parts first (eg job arrays and job packing with `xargs`) and then moving to shared memory or MPI jobs until you reach a desired level of performance is recommended.
-
-> # Push your work to github
-> For each of the branches that you have created:
-> - `git checkout [branch]`
-> - `git push`
->
-> Then go onto github and view the different branches.
-{: .challenge}

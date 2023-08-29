@@ -4,3 +4,5 @@ pylint
 pytest
 pytest-cov
 scalene
+mpi4py
+ipython

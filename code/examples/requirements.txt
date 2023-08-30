@@ -4,5 +4,7 @@ pylint
 pytest
 pytest-cov
 scalene
+matplotlib
+pandas
 mpi4py
 ipython

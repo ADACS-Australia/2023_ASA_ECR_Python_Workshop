@@ -12,10 +12,21 @@ keypoints:
 - "TBD"
 ---
 
+What is Pandas
+
+DataFrames:
+- nomenclature
+- creation
+- indexing
+- masking / slicing
+- modifying
+- plotting
+- joining frames
+- group/unstack and plotting
+
+
 Pro/con of Pandas vs numpy.array
+Notes about vaex, dask, and xarray
 
-Pandas join/group functionality
-
-Pandas plotting
 
 Short version of SWC course

@@ -1,15 +1,20 @@
 ---
 title: "The Pandas module"
-teaching: 90
-exercises: 0
+teaching: 45
+exercises: 45
 questions:
 - "What is Pandas?"
+- "How can I use Pandas for data exploration and visualisation?"
+- "How can I work with multiple tables at once?"
 objectives:
-- "TBD"
-- "TBD"
+- "Learn about the Pandas module and some alternatives"
+- "Understand how to group and summarize data"
+- "Be able to plot with Pandas"
+- "Combine data frames sequentially or with joins"
 keypoints:
-- "TBD"
-- "TBD"
+- "Pandas is a powerful solution for tabular data"
+- "Many SQL operations have equivalents in Pandas"
+- "Pandas can read/write many data formats"
 ---
 
 For a longer and more complete version of what will be covered in this session, please refer to lessons 3-6 of [this software carpentry course](https://datacarpentry.org/python-ecology-lesson).

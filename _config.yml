@@ -170,9 +170,9 @@ episode_order:
   - GitBranching
   - GitWorkflows
   - PullRequestsCodeReview
+# Day 3
   - Testing
   - GitHubActions
-# Day 3
   - Documentation
   - Debugging
 # Day 4

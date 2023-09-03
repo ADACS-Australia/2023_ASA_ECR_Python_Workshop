@@ -317,17 +317,20 @@ setup(
     version=0.1,
     install_requires=get_requirements(),
     python_requires='>=3.8',
+    scripts=['scripts/runme'],
     entry_points={'console_scripts':['sky_sim= mymodule.sky_sim:main']}
 )
 ~~~
 {: .language-python}
 
-Now that the module has been installed you should be able to import this module from python regardless of which directory you are working in. 
-Similarly, because we provided `scripts=['scripts/runme']`, we should have access to this script from anywhere on our system.
+Now that the module has been installed you should be able to import this module from python regardless of which directory you are working in.
+We defined an explicit script called `runme` which will be installed, but has a not so useful name.
+Similarly, we provided `entry_points` which causes python to write a script for us that calls the function `main` from `mymodule.sky_sim`.
+This new script is called `sky_sim` which is also accessible from anywhere on our system.
 Try it out!
 
 > ## Installing directly from github
-> If you have the right structure in your repository on github, then pip can install directly from github using the following:
+> If you have the right structure in your repository on github (see [later]({{page.root}}{% link _episodes/GitHub.md %})), then pip can install directly from github using the following:
 > `pip install git+https://github.com/[user]/[repo].git`
 >
 > You can even select a branch by appending `@branchname` to the github link, or `@commit-id` to select a particular commit.
@@ -373,9 +376,6 @@ For example our project readme might look like this:
 > ## Create a README.md for your project
 > Based on the above recommendations, write a short readme for this example project
 > 
-> Commit/push this to Github and see how it renders the information.
-> If you are not happy with the results, you can edit them on GitHub, it has a nice 'preview' feature that will reduce the number of commits that you'll generate.
-> Remember to pull these to your local repo to keep them in sync.
 {: .challenge}
 
 ## Useful project metadata
@@ -455,7 +455,9 @@ __citation__ = """
 ~~~
 {: .output}
 
-## Licensing your work
+## Extra - Licensing your work
+(Come back to this one you have covered the [GitHub]({{page.root}}{% link _episodes/GitHub.md %}) lesson).
+
 By default any creative work is under an exclusive copyright which means that the author(s) of that work have a say in what others can do with it.
 In general this means that no one can build upon, use, reuse, or distribute your work without your permission.
 To use or build upon software that has no license requires the new developer/user to contact the original author(s) and get permission.

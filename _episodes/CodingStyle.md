@@ -155,7 +155,6 @@ Notice that `pylint` *really* doesn't like lines like `from math import *`.
 > 
 > Note that sometimes you have to break the style guide in order to achieve our ultimate goal of **being clear**.
 > 
-> `git commit` with a useful message each time you make a meaningful change
 {: .discussion}
 
 > ## auto-formatters

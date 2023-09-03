@@ -56,7 +56,7 @@ The more you engage with your fellow learners and the more questions that you as
 We will be using sticky notes for in-person participants to indicate their readiness to move on: please stick them on your laptop screen to indicate if you need help or are done and ready to move ahead.
 For those joining online we'll be using emotes to indicate the same.
 
-We will use a shared document ([etherpad]({{site.ether_pad}}))) to manage and record many of our interactions.
+We will use a shared document ([etherpad]({{site.ether_pad}})) to manage and record many of our interactions.
 
 
 ## Conduct

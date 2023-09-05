@@ -102,6 +102,11 @@ git push -u origin main
 ~~~
 {: .language-bash}
 
+> ## Note
+> Make sure that you use the remote address that starts with `git@github` and not `https://`.
+> Press the `ssh` selector if you are seeing the wrong address
+{: .callout}
+
 Make sure to use the URL for your repository rather than Paul's.
 
 `origin` is a local name used to refer to the remote repository.

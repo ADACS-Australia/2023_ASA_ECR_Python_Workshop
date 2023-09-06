@@ -218,7 +218,61 @@ Of particular note for scientific computing is [numpy.testing](https://numpy.org
 `numpy.testing` has lots of convenience functions for testing related to numpy data types.
 Especially useful when you want things to be "close" or "equal to with a given precision".
 
-## Testing modes
+
+## Test metrics
+As well has having all your tests pass when run, another consideration is the fraction of code which is actually tested.
+A basic measure of this is called the *testing coverage*, which is the fraction of lines of code being executed during the test run.
+Code that isn't tested can't be validated, so the coverage metric helps you to find parts of your code that are not being run during the test.
+
+> ## Example coverage
+> Run `pytest --cov=sky_sim --cov-report=term ./test_module.py` to see the coverage report for this test/module.
+> > ## result
+> > ~~~
+> > pytest --cov=sky_sim --cov-report=term ./test_module.py 
+> > ================================================================ test session starts ================================================================
+> > platform linux -- Python 3.8.10, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
+> > rootdir: /data/alpha/hancock/ADACS/2023-03-20-Coding-Best-Practices-Workshop/code/examples
+> > plugins: cov-2.12.1, anyio-3.3.0
+> > collected 2 items                                                                                                                                   
+> > 
+> > test_module.py ..                                                                                                                             [100%]
+> > 
+> > ---------- coverage: platform linux, python 3.8.10-final-0 -----------
+> > Name         Stmts   Miss  Cover
+> > --------------------------------
+> > sky_sim.py      37     21    43%
+> > --------------------------------
+> > TOTAL           37     21    43%
+> > 
+> > 
+> > ================================================================= 2 passed in 0.04s =================================================================
+> > ~~~
+> > {: .output}
+> {: .solution}
+{: .challenge}
+
+In the above example I have only 43% coverage, which means that only 43% of the lines in the `sky_sim.py` file were executed during my testing.
+Achieving 100% coverage is a fun goal, but usually only achievable for the simplest codes.
+Even with 100% code coverage, there is no guarantee that you have zero bugs in your code.
+
+We can have a better look at the coverage report by writing an html formatted report:
+~~~
+python -m pytest --cov=mymodule --cov-report html:coverage tests/test_module.py
+~~~
+{: .language-bash}
+This will give use a report for each file in the directory `coverage`.
+Let's open up the file `sky_sim_py.html`, and see what statements were hit/missed during the testing.
+
+Note in particular that anything in the `if __name__ == "__main__"` clause will not be tested because it is only run when the file is called directly, not when it is imported as a module.
+How could we write tests that would test our CLI?
+
+## Automated testing
+We have already learned about the `pytest` package that will run all our tests and summarize the results.
+This is one form of automation, but it relies on the user/developer remembering to run the tests after altering the code.
+Another form of automation is to have a dedicated workflow that will detect code changes, run the tests, and then report the results.
+GitHub (and GitLab) have continuous integration (CI) tools that you can make use of to run a suite of tests every time you push a new commit, or make a pull request.
+
+## Extra: Testing modes
 
 Broadly speaking there are two classes of testing: functional and non-functional.
 
@@ -291,56 +345,3 @@ One strategy for developing test code is to write tests for each bug or failure 
 In this strategy, when a bug is identified, the first course of action is to develop a test case that will expose the bug.
 Once the test is in place, the code is altered until the test passes.
 This strategy can be very useful for preventing bugs from reoccurring, or at least identifying them when they do reoccur so that they don't make their way into production.
-
-## Test metrics
-As well has having all your tests pass when run, another consideration is the fraction of code which is actually tested.
-A basic measure of this is called the *testing coverage*, which is the fraction of lines of code being executed during the test run.
-Code that isn't tested can't be validated, so the coverage metric helps you to find parts of your code that are not being run during the test.
-
-> ## Example coverage
-> Run `pytest --cov=sky_sim --cov-report=term ./test_module.py` to see the coverage report for this test/module.
-> > ## result
-> > ~~~
-> > pytest --cov=sky_sim --cov-report=term ./test_module.py 
-> > ================================================================ test session starts ================================================================
-> > platform linux -- Python 3.8.10, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
-> > rootdir: /data/alpha/hancock/ADACS/2023-03-20-Coding-Best-Practices-Workshop/code/examples
-> > plugins: cov-2.12.1, anyio-3.3.0
-> > collected 2 items                                                                                                                                   
-> > 
-> > test_module.py ..                                                                                                                             [100%]
-> > 
-> > ---------- coverage: platform linux, python 3.8.10-final-0 -----------
-> > Name         Stmts   Miss  Cover
-> > --------------------------------
-> > sky_sim.py      37     21    43%
-> > --------------------------------
-> > TOTAL           37     21    43%
-> > 
-> > 
-> > ================================================================= 2 passed in 0.04s =================================================================
-> > ~~~
-> > {: .output}
-> {: .solution}
-{: .challenge}
-
-In the above example I have only 43% coverage, which means that only 43% of the lines in the `sky_sim.py` file were executed during my testing.
-Achieving 100% coverage is a fun goal, but usually only achievable for the simplest codes.
-Even with 100% code coverage, there is no guarantee that you have zero bugs in your code.
-
-We can have a better look at the coverage report by writing an html formatted report:
-~~~
-python -m pytest --cov=mymodule --cov-report html:coverage tests/test_module.py
-~~~
-{: .language-bash}
-This will give use a report for each file in the directory `coverage`.
-Let's open up the file `sky_sim_py.html`, and see what statements were hit/missed during the testing.
-
-Note in particular that anything in the `if __name__ == "__main__"` clause will not be tested because it is only run when the file is called directly, not when it is imported as a module.
-How could we write tests that would test our CLI?
-
-## Automated testing
-We have already learned about the `pytest` package that will run all our tests and summarize the results.
-This is one form of automation, but it relies on the user/developer remembering to run the tests after altering the code.
-Another form of automation is to have a dedicated workflow that will detect code changes, run the tests, and then report the results.
-GitHub (and GitLab) have continuous integration (CI) tools that you can make use of to run a suite of tests every time you push a new commit, or make a pull request.

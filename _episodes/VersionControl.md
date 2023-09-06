@@ -91,6 +91,15 @@ Lets make a start on our project by keeping that first proof of concept script u
 > If git gets your goat, have a yarn in the [etherpad]({{site.ether_pad}})
 {: .challenge}
 
+
+> ## Default branch name
+> If you are using a older version of git then you might see that your default branch is called `master` instead of `main`.
+> Details of why this change occured are [here](https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main)
+>
+> To rename your branch type `git branch -m master main`
+> 
+{: .callout}
+
 If at any point we are editing our work and we break something, or change our mind about what we are doing, so long as we have the files under version control we can go back to our previous save point using:
 ~~~
 git checkout -- <filename>

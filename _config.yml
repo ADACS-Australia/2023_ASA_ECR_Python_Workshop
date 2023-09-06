@@ -112,7 +112,7 @@ ether_pad: "https://pad.carpentries.org/2023-ADACS-ECR-WOrkshop"
 
 # Surveys.
 pre_survey: "https://forms.gle/BTTwH5zJCeyKxUdS9"
-post_survey: "https://forms.gle/fJnand3EFP5CVPwx6"
+post_survey: "https://forms.gle/HJR4ERAJRDEHZiFc6"
 
 # Start time in minutes (0 to be clock-independent, 540 to show a start at 09:00 am).
 start_time: 0

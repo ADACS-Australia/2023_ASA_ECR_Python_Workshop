@@ -28,7 +28,7 @@ Parallel computing is about making use of resources while optimization is about 
 >
 > Please do feel free to experiment with the code and ask questions about the implementation details.
 > 
-{: .language-python}
+{: .challenge}
 
 ## Types of parallelism	
 One of the biggest advantages of using an HPC is that you will have access to a large number of processing cores.

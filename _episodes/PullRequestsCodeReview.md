@@ -131,5 +131,5 @@ Resolved comments are folded in the history of the PR, but you can unfold them a
 > 1. Press the big green "Merge pull request" button to complete and close the PR.
 > 1. Delete the feature branch related to this PR.
 > 1. Navigate to your "Issues" tab and confirm that the linked issue was closed (close it if not).
->
+> 1. In your local repository, delete the feature branch using `git branch -D <branchname>`
 {: .challenge}

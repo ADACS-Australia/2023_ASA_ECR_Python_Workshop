@@ -33,6 +33,7 @@ For this we will be using the git version control system, and in particular we w
 Software requirements
 
 - Python 3.8+ with the following modules
+  - pylint
   - numpy
   - numpy-testing
   - pytest

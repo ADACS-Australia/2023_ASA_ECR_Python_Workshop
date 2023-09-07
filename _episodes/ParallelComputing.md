@@ -105,6 +105,18 @@ xargs -a greetings.txt -L 1 -exec ./greet.sh
 ~~~
 {: .language-bash}
 
+> ## On OSx
+> Frustratingly the `xargs` program on macs have a different syntax.
+> Instead of the above, on a mac, you would need to do:
+> ~~~
+> cat greetings.txt | xargs -L1 ./greet.sh
+> ~~~
+> {: .language-bash}
+> 
+> Thankfully this isn't completely at odds with the unix version of xargs, and so this alternative version will also work for linux users.
+> 
+{: .callout}
+
 The `-L 1` instructs xargs to pass one line at a time as arguments to our `-exec` command, and `-a` indicates the input data file.
 The above would eventually output the following:
 
@@ -384,7 +396,9 @@ Here is an implementation of our `sky_sim.py` code using multiprocessing.
 > 
 >     try:
 >         # call make_posisions(a) for each a in args
->         results = pool.map(make_stars, args, chunksize=1)
+>         results = pool.map_async(make_stars, args, chunksize=1).get(timeout=10_000)
+>         #              ^- using map_async here means that we can catch the 
+>         #                 keyboard interrupt and exit the code cleanly.
 >     except KeyboardInterrupt:
 >         # stop all the processes if the user calls the kbd interrupt
 >         print("Caught kbd interrupt")
@@ -413,7 +427,7 @@ Here is an implementation of our `sky_sim.py` code using multiprocessing.
 >     # now write these to a csv file for use by my other program
 >     with open('catalog.csv', 'w') as f:
 >         print("id,ra,dec", file=f)
->         np.savetxt(f, np.column_stack((np.arange(NSRC), pos[0,:].T, pos[1,:].T)),fmt='%07d, %12f, > %12f')
+>         np.savetxt(f, np.column_stack((np.arange(NSRC), pos[0,:].T, pos[1,:].T)),fmt='%07d, %12f, %12f')
 > 
 > ~~~
 > {: .language-python}
@@ -563,7 +577,7 @@ return radec
 > 
 > There are a few good practices that we should obey when doing our multiprocessing, and this is where the extra code comes in.
 > Firstly, we should plan for when things go bad.
-> If we were running our program, and the user presses <CTRL>+C, then we want the program to exit.
+> If we were running our program, and the user presses <kbd>CTRL+C</kbd>, then we want the program to exit.
 > However, by default only the current process (the parent) will exit, and the others will continue on their way.
 > By wrapping our `pool.map` in a `try/except` clause we can catch the keyboard interrupt and then close the program in a nicer way.
 {: .callout}
@@ -682,25 +696,25 @@ Let's look at how we can do that in another example.
 > 
 > 
 >         nbytes = 2 * nsrc * np.float64(1).nbytes
->         radec = SharedMemory(name=f'radec_{mem_id}', create=True, > size=nbytes)
+>         radec = SharedMemory(name=f'radec_{mem_id}', create=True, size=nbytes)
 > 
 >         # creating a new process will start a new python interpreter
->         # on linux the new process is created using fork, which > copies the memory
->         # However on win/mac the new process is created using spawn, > which does
->         # not copy the memory. We therefore have to initialize the > new process
+>         # on linux the new process is created using fork, which copies the memory
+>         # However on win/mac the new process is created using spawn, which does
+>         # not copy the memory. We therefore have to initialize the new process
 >         # and tell it what the value of mem_id is.
 >         method = 'spawn'
 >         if sys.platform.startswith('linux'):
 >             method = 'fork'
->         # start a new process for each task, hopefully to reduce > residual
+>         # start a new process for each task, hopefully to reduce residual
 >         # memory use
 >         ctx = multiprocessing.get_context(method)
 >         pool = ctx.Pool(processes=cores, maxtasksperchild=1,
 >                         initializer=init, initargs=(mem_id,)
->                         # ^-pass mem_id to the function 'init' when > creating a new process
+>                         # ^-pass mem_id to the function 'init' when creating a new process
 >                         )
 >         try:
->             pool.map_async(make_stars, args, chunksize=1).get> (timeout=10_000)
+>             pool.map_async(make_stars, args, chunksize=1).get(timeout=10_000)
 >         except KeyboardInterrupt:
 >             print("Caught kbd interrupt")
 >             pool.close()
@@ -708,7 +722,7 @@ Let's look at how we can do that in another example.
 >         else:
 >             pool.close()
 >             pool.join()
->             # make sure to .copy() or the data will dissappear when > you unlink the shared memory
+>             # make sure to .copy() or the data will disappear when you unlink the shared memory
 >             local_radec = np.ndarray((2, nsrc), buffer=radec.buf,
 >                                      dtype=np.float64).copy()
 >     finally:
@@ -725,7 +739,7 @@ Let's look at how we can do that in another example.
 >     # now write these to a csv file for use by my other program
 >     with open('catalog.csv', 'w') as f:
 >         print("id,ra,dec", file=f)
->         np.savetxt(f, np.column_stack((np.arange(NSRC), pos[0, :].T, > pos[1, :].T)),fmt='%07d, %12f, %12f')
+>         np.savetxt(f, np.column_stack((np.arange(NSRC), pos[0, :].T, pos[1, :].T)),fmt='%07d, %12f, %12f')
 > 
 > ~~~
 > {: .language-python}

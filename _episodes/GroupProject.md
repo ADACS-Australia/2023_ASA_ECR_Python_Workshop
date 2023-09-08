@@ -61,20 +61,15 @@ Therefore, we will be forming groups, but we will be forming as diverse groups a
 {: .challenge}
 
 > ## Choose group names and roles
-> Assign the following roles to people in your group:
-> - a speaker who will answer questions on behalf of the group,
-> - a presenter who will run a short presentation on Friday afternoon,
-> - a convenor who will keep discussions on topic and on time
-> 
-> You cannot have one person doing two roles.
->
-> Additionally assign someone to be the keeper of the github repo, ideally someone who doesn't already have a role.
+> Assign someone to be the keeper of the github repo.
+> This should be someone who is able to be present at all the afternoon sessions.
 >
 > Choose your group name by having the github repo owner selecting whatever default name github comes up with when you create a new repository.
+>
 {: .challenge}
 
 > ## Make a repo and report back
-> Make a new github repo with your team name, add all your team members as collaborators with at least write access to the repo.
+> Have the repo owner add all the team members as collaborators.
 >
 > Record your team name, team members, and repo link in the [etherpad]({{site.ether_pad}}).
 {: .challenge}

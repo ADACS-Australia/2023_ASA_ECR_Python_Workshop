@@ -41,6 +41,8 @@ Software requirements
   - pdoc
   - scalene
   - pandas
+  - matplotlib
+  - jupyter (optional but nice)
 - A integrated development environment ([IDE](https://en.wikipedia.org/wiki/Integrated_development_environment)) or text editor of choice
   - We recommend [PyCharm](https://www.jetbrains.com/pycharm/) or [Visual Studio Code](https://code.visualstudio.com/)
 - An operating system which gives you a proper command line

@@ -138,6 +138,15 @@ If you want a table or column name that clashes with a reserved word (eg `dec`) 
 
 **Note**: The `/*` and `*/` have been used to comment out a line that refers to a table that we haven't created, to stop SQLite from complaining.
 
+> ## Foreign Keys with SQLite
+> By default SQLite doesn't enforce foreign key constraints - it will let you create broken links.
+> To instruct SQLite to play nice you should do the following:
+> ~~~
+> PRAGMA foreign_keys = ON;
+> ~~~
+> {: .language-sql}
+{:. callout}
+
 ### Interacting with the database contents
 Once we have the structure in place, we can begin to add content to our database.
 This is where the table operations come in: DELETE, INSERT, SELECT, UPDATE.

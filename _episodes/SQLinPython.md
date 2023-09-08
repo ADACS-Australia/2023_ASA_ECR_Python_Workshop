@@ -306,13 +306,13 @@ There are two main ways to work with databases in python:
 
 ### SQL libraries in python
 
-| library | database supported|
-| -- | -- |
-| [sqlite3](https://docs.python.org/3/library/sqlite3.html) | [SQLite](https://sqlite.org/index.html) | 
-| [psycopg2](https://pypi.org/project/psycopg2/) | [PostgreSQL](https://www.postgresql.org/) |
-| [MySQL-Python](https://pypi.org/project/MySQL-python/) | [MySQL](https://www.mysql.com/) | 
-| [pyodbc](https://pypi.org/project/pyodbc/) | [MS SQL Server](https://www.microsoft.com/en-au/sql-server/) | 
-| [SQLAlchemy](https://www.sqlalchemy.org/) | multiple |
+| library                                                   | database supported                                           |
+| --------------------------------------------------------- | ------------------------------------------------------------ |
+| [sqlite3](https://docs.python.org/3/library/sqlite3.html) | [SQLite](https://sqlite.org/index.html)                      |
+| [psycopg2](https://pypi.org/project/psycopg2/)            | [PostgreSQL](https://www.postgresql.org/)                    |
+| [MySQL-Python](https://pypi.org/project/MySQL-python/)    | [MySQL](https://www.mysql.com/)                              |
+| [pyodbc](https://pypi.org/project/pyodbc/)                | [MS SQL Server](https://www.microsoft.com/en-au/sql-server/) |
+| [SQLAlchemy](https://www.sqlalchemy.org/)                 | multiple                                                     |
 
 Each of the above libraries have effectively the same architecture for how they give you access to the underlying database.
 You create a connection object to connect to the database, and from this you create a cursor.
@@ -407,7 +407,7 @@ The reason is that it will allow the library to deal with all the escape charact
 These libraries are great if you have simple databases to manage, or if you are just reading from an existing database.
 If you have more complex databases to manage then it's often better to work with an object relational mapper or ORM.
 
-## Python ORMs
+## Extra: Python ORMs
 ORMs provide an on a relational database that allows you to write Python code instead of SQL.
 Developers can use the programming language they are comfortable with to work with a database instead of writing SQL statements or stored procedures.
 

@@ -12,7 +12,7 @@ keypoints:
 - "Everyone is here to learn and that means making mistakes"
 ---
 ## Acknowledgement of country
-We wish to acknowledge the custodians of the land we reside on. These lessons were developed on the lands of the Wadjuk (Perth region) people of the Nyoongar nation. We pay our respect to their Elders and acknowledge their continuing culture and the contribution they make to the life of our cities and regions. 
+We wish to acknowledge the custodians of the land we reside on. These lessons were developed on the lands of the Wadjuk (Perth region) people of the Nyoongar nation. We pay our respect to their Elders and acknowledge their continuing culture and the contribution they make to the life of our cities and regions.
 
 
 ## Overview
@@ -71,13 +71,13 @@ We will use a shared document ([etherpad]({{site.ether_pad}})) to manage and rec
 
 This workshop will be an inclusive and equitable space, which respects:
 - the lived experience of it's attendees,
-- the right for all to learn, and 
+- the right for all to learn, and
 - the fact that learning means making mistakes.
 
 We ask that you follow these guidelines:
 
 - Behave professionally. Harassment and sexist, racist, or exclusionary comments or jokes are not appropriate.
-- All communication should be appropriate for a professional audience including people of many different backgrounds. 
+- All communication should be appropriate for a professional audience including people of many different backgrounds.
 - Sexual or sexist language and imagery is not appropriate.
 - Be considerate and respectful to others.
 - Do not insult or put down other attendees.
@@ -89,9 +89,9 @@ See the [ASA2022 code of conduct](https://www.asa2022.org/code-of-conduct) and t
 
 > ## Introduce yourselves
 > ![IceBreaker](https://ichef.bbci.co.uk/news/976/cpsprodpb/D6B5/production/_123956945_225107a3-318d-4c2e-b040-2dcd03c4698a.jpg){: width="400"}
-> 
-> Introduce yourself to your peers by telling us your name, a dish that you enjoy cooking, and something you look forward to doing in the summer.
-> 
+>
+> Introduce yourself to your peers by telling us your name, your favorite software language/app/package, and something you look forward to doing in the summer.
+>
 > Do this in person and via the [etherpad]({{site.ether_pad}}).
 {: .challenge}
 

@@ -634,10 +634,10 @@ species_df
 3          BA           Baiomys          taylori   Rodent
 4          CB   Campylorhynchus  brunneicapillus     Bird
 ..        ...               ...              ...      ...
-16         GS          Gambelia	          silus  Reptile
+16         GS          Gambelia            silus  Reptile
 17         NL           Neotoma         albigula   Rodent
-18         NX           Neotoma	             sp.  Rodent
-19         OL          Onychomys	     leucogaster  Rodent
+18         NX           Neotoma              sp.   Rodent
+19         OL          Onychomys     leucogaster   Rodent
 
 [54 rows x 4 columns]
 ~~~

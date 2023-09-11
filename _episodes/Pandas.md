@@ -613,6 +613,199 @@ s_plot.set_xlabel("Plot")
 
 
 ## Combining DataFrames
-DataFrames:
-- masking / slicing
-- joining frames
+There are two main ways to combine DatFrames: concatenation or by joining.
+To demonstrate the combining DataFrames we need an additional DataFrame to work with so we'll load that now:
+
+~~~
+# our original surveys table
+surveys_df = pd.read_sql("SELECT * FROM surveys", con)
+# an additional table of species (but only some of them)
+species_df = pd.read_sql("SELECT * FROM species LIMIT 20", con)
+# look at our new DataFrame
+species_df
+~~~
+{: .language-python}
+
+~~~
+  species_id             genus          species     taxa
+0          AB        Amphispiza        bilineata     Bird
+1          AH  Ammospermophilus          harrisi   Rodent
+2          AS        Ammodramus       savannarum     Bird
+3          BA           Baiomys          taylori   Rodent
+4          CB   Campylorhynchus  brunneicapillus     Bird
+..        ...               ...              ...      ...
+16         GS          Gambelia	          silus  Reptile
+17         NL           Neotoma         albigula   Rodent
+18         NX           Neotoma	             sp.  Rodent
+19         OL          Onychomys	     leucogaster  Rodent
+
+[54 rows x 4 columns]
+~~~
+{: .output}
+
+
+### Concatenation
+Concatenation works by copying one DataFrame either below (vertical stack) or beside (horizontal stack) another.
+We can use the `concat` function in pandas to append either columns or rows from one DataFrame to another.
+Let's grab two subsets of our data to see how this works.
+
+~~~
+# Read in first 10 lines of surveys table
+survey_sub = surveys_df.head(10)
+# Grab the last 10 rows
+survey_sub_last10 = surveys_df.tail(10)
+# Reset the index values to the second DataFrame appends properly
+survey_sub_last10 = survey_sub_last10.reset_index(drop=True)
+# drop=True option avoids adding new index column with old index values
+~~~
+{: .language-python}
+
+When we concatenate DataFrames, we need to specify the axis.
+`axis=0` tells pandas to stack the second DataFrame UNDER the first one.
+Pandas will automatically detect whether the column names are the same and will stack accordingly.
+`axis=1` will stack the columns in the second DataFrame to the RIGHT of the first DataFrame.
+To stack the data vertically, we need to make sure we have the same columns and associated column format in both datasets.
+When we stack horizontally, we want to make sure what we are doing makes sense (i.e. the data are related in some way).
+
+~~~
+# Stack the DataFrames on top of each other
+vertical_stack = pd.concat([survey_sub, survey_sub_last10], axis=0)
+
+# Place the DataFrames side by side
+horizontal_stack = pd.concat([survey_sub, survey_sub_last10], axis=1)
+~~~
+{: .language-python}
+
+#### Row Index Values and Concat
+
+Have a look at the `vertical_stack` DataFrame. Notice anything unusual?
+The row indexes for the two DataFrames `survey_sub` and `survey_sub_last10` have been repeated.
+We can reindex the new DataFrame using the `reset_index()` method.
+
+### Joining DataFrames
+
+Pandas lets us join DataFrames as if they were tables in a database much like we did with [SQL]({{page.root}}{% link _episodes/SQLinPython.md%}).
+For example, the `species` table that we've been working with is a lookup table.
+This table contains the genus, species and taxa code for 55 species.
+The species code is unique for each line.
+These species are identified in our survey data as well using the unique species code.
+Rather than adding three more columns for the genus, species and taxa to each of the 35,549 line `survey` DataFrame, we can maintain the shorter table with the species information.
+When we want to access that information, we can create a query that joins the additional columns of information to the `survey` DataFrame.
+
+#### Identifying join keys
+When we read our database tables into Pandas any foreign key links are lost.
+Instead we end up with matching values in the respective tables.
+This means that we can't do the NATURAL joins that we did with sqlite, and have to be specific about how the rows should be matched up.
+
+There are three main types of joins we can do:
+- Inner join: Returns only rows which match in both tables
+- Left (outer) join: Returns all rows from the first table, plus their matches in the second table.
+  - Will result in many columns of NULL where there is no match in the second table.
+- Right (outer) join: Returns all rows from the second table, plus their matches in the first table.
+  - Will result in many columns of NULL where there is no match in the first table.
+
+#### Inner joins
+
+The most common type of join is called an **inner join**.
+An inner join combines two DataFrames based on a join key and returns a new DataFrame that contains *only* those rows that have matching values in *both* of the original DataFrames.
+
+The pandas function for performing joins is called `merge` and an Inner join is the default option:
+
+~~~
+merged_inner = pd.merge(left=survey_sub, right=species_df, left_on='species_id', right_on='species_id')
+merged_inner
+~~~
+{: .language-python}
+
+In this case, `species_id` is the only column name in  both DataFrames, so if we skipped the `left_on` and `right_on` arguments, `pandas` would guess that we wanted to use that column to join.
+However, it is usually better to be explicit.
+
+~~~
+   record_id  month  day  year  plot_id species_id sex  hindfoot_length  \
+0          1      7   16  1977        2         NL   M               32
+1          2      7   16  1977        3         NL   M               33
+2          3      7   16  1977        2         DM   F               37
+3          4      7   16  1977        7         DM   M               36
+4          5      7   16  1977        3         DM   M               35
+5          8      7   16  1977        1         DM   M               37
+6          9      7   16  1977        1         DM   F               34
+
+   weight       genus   species    taxa
+0     NaN     Neotoma  albigula  Rodent
+1     NaN     Neotoma  albigula  Rodent
+2     NaN   Dipodomys  merriami  Rodent
+3     NaN   Dipodomys  merriami  Rodent
+4     NaN   Dipodomys  merriami  Rodent
+5     NaN   Dipodomys  merriami  Rodent
+6     NaN   Dipodomys  merriami  Rodent
+~~~
+{: .language-python}
+
+The result of an inner join of `survey_sub` and `species_df` is a new DataFrame that contains the combined set of columns from `survey_sub` and `species_df`.
+It *only* contains rows that have two-letter species codes that are the same in both the `survey_sub` and `species_df` DataFrames.
+In other words, if a row in `survey_sub` has a value of `species_id` that does *not* appear in the `species_id` column of `species`, it will not be included in the DataFrame returned by an inner join.
+Similarly, if a row in `species_df` has a value of `species_id` that does *not* appear in the `species_id` column of `survey_sub`, that row will not be included in the DataFrame returned by an inner join.
+
+The two DataFrames that we want to join are passed to the `merge` function using the `left` and `right` argument.
+The `left_on='species_id'` argument tells `merge` to use the `species_id` column as the join key from `survey_sub` (the `left` DataFrame).
+Similarly , the `right_on='species_id'` argument tells `merge` to use the `species_id` column as the join key from `species_df` (the `right` DataFrame).
+For inner joins, the order of the `left` and `right` arguments does not matter.
+
+The result `merged_inner` DataFrame contains all of the columns from `survey_sub` (`record_id`, `month`, `day`, etc.) as well as all the columns from `species_sub` (`species_id`, `genus`, `species`, and `taxa`).
+
+#### Left joins
+What if we want to add information from `species_sub` to `survey_df` without losing any of the information from `survey_sub`?
+In this case, we use a different type of join called a "left outer join", or a "left join".
+
+Like an inner join, a left join uses join keys to combine two DataFrames.
+Unlike an inner join, a left join will return *all* of the rows from the `left` DataFrame, even those rows whose join key(s) do not have values in the `right` DataFrame.
+Rows in the `left` DataFrame that are missing values for the join key(s) in the `right` DataFrame will simply have null (i.e., NaN or None) values for those columns in the resulting joined DataFrame.
+
+A left join is performed in pandas by calling the same `merge` function used for inner join, but using the `how='left'` argument:
+
+~~~
+merged_left = pd.merge(left=survey_sub, right=species_df, how='left', left_on='species_id', right_on='species_id')
+merged_left
+~~~
+{: .language-python}
+
+~~~
+   record_id  month  day  year  plot_id species_id sex  hindfoot_length  \
+0          1      7   16  1977        2         NL   M               32
+1          2      7   16  1977        3         NL   M               33
+2          3      7   16  1977        2         DM   F               37
+3          4      7   16  1977        7         DM   M               36
+4          5      7   16  1977        3         DM   M               35
+5          6      7   16  1977        1         PF   M               14
+6          7      7   16  1977        2         PE   F              NaN
+7          8      7   16  1977        1         DM   M               37
+8          9      7   16  1977        1         DM   F               34
+9         10      7   16  1977        6         PF   F               20
+
+   weight       genus   species    taxa
+0     NaN     Neotoma  albigula  Rodent
+1     NaN     Neotoma  albigula  Rodent
+2     NaN   Dipodomys  merriami  Rodent
+3     NaN   Dipodomys  merriami  Rodent
+4     NaN   Dipodomys  merriami  Rodent
+5     NaN         NaN       NaN     NaN
+6     NaN  Peromyscus  eremicus  Rodent
+7     NaN   Dipodomys  merriami  Rodent
+8     NaN   Dipodomys  merriami  Rodent
+9     NaN         NaN       NaN     NaN
+~~~
+{: .output}
+
+The result DataFrame from a left join (`merged_left`) looks very much like the result DataFrame from an inner join (`merged_inner`) in terms of the columns it contains.
+However, unlike `merged_inner`, `merged_left` contains the *same number of rows* as the original `survey_sub` DataFrame.
+When we inspect `merged_left`, we find there are rows where the information that should have come from `species_sub` (i.e., `species_id`, `genus`, and `taxa`) is missing (they contain `NaN` values).
+
+### Other join types
+
+The pandas `merge` function supports two other join types:
+
+- Right (outer) join: Invoked by passing `how='right'` as an argument.
+  - Similar to a left join, except *all* rows from the `right` DataFrame are kept, while rows from the `left` DataFrame without matching join key(s) values are discarded.
+- Full (outer) join: Invoked by passing `how='outer'` as an argument.
+  - This join type returns the all pairwise combinations of rows from both DataFrames; i.e., the result DataFrame will `NaN` where data is missing in one of the dataframes.
+  - This join type is very rarely used.

@@ -17,7 +17,7 @@ keypoints:
 
 ## Test your code
 > Finding your bug is a process of confirming the many things that you believe are true — until you find one which is not true.
-> 
+>
 > — Norm Matloff
 {: .quote}
 
@@ -84,7 +84,7 @@ With pytest installed we simply navigate to our package directory and run `pytes
 platform linux -- Python 3.8.10, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
 rootdir: /data/alpha/hancock/ADACS/2023-03-20-Coding-Best-Practices-Workshop/code/examples
 plugins: cov-2.12.1, anyio-3.3.0
-collected 1 tem                       
+collected 1 tem
 
 test_module.py .                                                       [100%]
 
@@ -142,14 +142,14 @@ We can have multiple exit points in our function, corresponding to the various w
 > {: .language-python}
 >
 > Create a test for the above function that will raise an exception when the returned ra/dec are not correct.
-> 
+>
 > > ## initial function
 > > ~~~
 > > def get_radec():
 > >     """
 > >     Generate the ra/dec coordinates of Andromeda
 > >     in decimal degrees.
-> > 
+> >
 > >     Returns
 > >     -------
 > >     ra : float
@@ -160,10 +160,10 @@ We can have multiple exit points in our function, corresponding to the various w
 > >     # from wikipedia
 > >     andromeda_ra = '00:42:44.3'
 > >     andromeda_dec = '41:16:09'
-> > 
+> >
 > >     d, m, s = andromeda_dec.split(':')
 > >     dec = int(d)+int(m)/60+float(s)/3600
-> > 
+> >
 > >     h, m, s = andromeda_ra.split(':')
 > >     ra = 15*(int(h)+int(m)/60+float(s)/3600)
 > >     ra = ra/math.cos(dec*math.pi/180)
@@ -171,25 +171,25 @@ We can have multiple exit points in our function, corresponding to the various w
 > > ~~~
 > > {: .language-python}
 > {: .solution}
-> 
+>
 {: .challenge}
 
 > ## testing make_stars()
 > Read the docstring for the make_stars function below and come up with at least 2 tests that you can run.
-> 
+>
 > > ## initial function
 > > ~~~
 > > def make_stars(ra, dec, nsrc=NSRC):
 > >     """
 > >     Generate NSRC stars within 1 degree of the given ra/dec
-> > 
+> >
 > >     Parameters
 > >     ----------
 > >     ra,dec : float
 > >         The ra and dec in degrees for the central location.
 > >     nsrc : int
 > >         The number of star locations to generate
-> >     
+> >
 > >     Returns
 > >     -------
 > >     ras, decs : list
@@ -204,7 +204,8 @@ We can have multiple exit points in our function, corresponding to the various w
 > > ~~~
 > > {: .language-python}
 > {: .solution}
-> How do you deal with the fact that the positions that are generated are random and thus different each time you run them?
+> How do you test that the statement in the docstring is correct (you get NSRC stars within 1 degree of the given ra/dec) when you will get a different result when you run the test.
+> Remember that you are trying to test that your code does what you expect which is what you promise in the docstring.
 >
 {: .challenge}
 
@@ -228,23 +229,23 @@ Code that isn't tested can't be validated, so the coverage metric helps you to f
 > Run `pytest --cov=sky_sim --cov-report=term ./test_module.py` to see the coverage report for this test/module.
 > > ## result
 > > ~~~
-> > pytest --cov=sky_sim --cov-report=term ./test_module.py 
+> > pytest --cov=sky_sim --cov-report=term ./test_module.py
 > > ================================================================ test session starts ================================================================
 > > platform linux -- Python 3.8.10, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
 > > rootdir: /data/alpha/hancock/ADACS/2023-03-20-Coding-Best-Practices-Workshop/code/examples
 > > plugins: cov-2.12.1, anyio-3.3.0
-> > collected 2 items                                                                                                                                   
-> > 
+> > collected 2 items
+> >
 > > test_module.py ..                                                                                                                             [100%]
-> > 
+> >
 > > ---------- coverage: platform linux, python 3.8.10-final-0 -----------
 > > Name         Stmts   Miss  Cover
 > > --------------------------------
 > > sky_sim.py      37     21    43%
 > > --------------------------------
 > > TOTAL           37     21    43%
-> > 
-> > 
+> >
+> >
 > > ================================================================= 2 passed in 0.04s =================================================================
 > > ~~~
 > > {: .output}
@@ -300,7 +301,7 @@ Unit testing can be easily automated, and because the desired behaviors of a fun
 
 ### Integration testing
 Integration testing is a level above unit testing.
-Integration testing is where you test that functions/classes interact with each other as documented/desired. 
+Integration testing is where you test that functions/classes interact with each other as documented/desired.
 It is possible for code to pass unit testing but to fail integration testing.
 For example the individual functions may work properly, but the format or order in which data are passed/returned may be different.
 Integration tests can be automated.
@@ -330,7 +331,7 @@ Examples could be that the software should run on:
 - OSX, Windows, and Linux
 - Pawsey, NCI, and OzStar
 - Azure, AWS, and Google Cloud
-- iPhone and Android 
+- iPhone and Android
 
 Compatibility testing requires testing environments that provide the given combination of software/hardware.
 Compatibility testing typically makes a lot of use of containers to test different environments or operating systems.

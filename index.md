@@ -114,9 +114,9 @@ LOCATION
     <td><a href="https://www.google.com/maps/place/Curtin+Institute+of+Radio+Astronomy+(CIRA)/@-31.9952735,115.8895341,18z/data=!4m6!3m5!1s0x2a32bc83267dccdb:0x379a50125fb670db!8m2!3d-31.9945426!4d115.8885841!16s%2Fg%2F11c2dgc6pb?entry=ttu">Google Maps</a></td>
   </tr>
   <tr>
-    <td>Macquarie University</td>
+    <td>21WW lvl 2, room 300, Macquarie University</td>
     <td>September 11th-16th</td>
-    <td>link</td>
+    <td><a href="https://www.google.com/maps/place/Macquarie+Theatre/@-33.7748316,151.1135089,17z/data=!3m1!5s0x6b12a6723615af0d:0xe22e0b0919789616!4m6!3m5!1s0x6b12a672314df79f:0x486b7a7020bffead!8m2!3d-33.7746449!4d151.1122661!16s%2Fg%2F11c603z4nq?entry=ttu">Google Maps</a></td>
   </tr>
   <tr>
    <td>Melbourne University</td>

@@ -11,11 +11,11 @@ latitude: "-31.9952735"        # decimal latitude of workshop venue (use https:/
 longitude: "115.8895341"       # decimal longitude of the workshop venue (use https://www.latlong.net)
 humandate: "September 4-8, 11-16, 25-28 2023"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
 humantime: "9:00 am - 5:00 pm Local"    # human-readable times for the workshop e.g., "9:00 am - 4:30 pm CEST (7:00 am - 2:30 pm UTC)"
-startdate: 2023-09-04      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
-enddate: 2023-09-08        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
-instructor: ["Paul Hancock"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
-helper: [""]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
-email: ["paul.hancock@curtin.edu.au"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
+startdate: 2023-09-11      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
+enddate: 2023-09-15        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
+instructor: ["Nick Swainston"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
+helper: ["James Tocknell"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
+email: ["nswainston@swin.edu.au"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
 collaborative_notes:  'https://pad.carpentries.org/2023-ADACS-ECR-WOrkshop' # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document (e.g., https://pad.carpentries.org/2015-01-01-euphoria)
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
 ---
@@ -66,8 +66,8 @@ INTRODUCTION
 Edit the general explanatory paragraph below if you want to change
 the pitch.
 {% endcomment %}
-<p> This workshop was developed by <a href="https://adacs.org.au/">ADACS</a> as training project for our <a href="https://adacs.org.au/software-services/merit-allocation-program-application/">Merit Allocation Program</a>.
-The training was developed in collaboration with the proposers of the project: Drs Caroline Foster, Nandini Sahu, and Cristina Martinez-Lombilla. 
+<p> This workshop was developed by <a href="https://adacs.org.au/">ADACS</a> as training project for our <a href="https://adacs.org.au/software-services/merit-allocation-program-application/">Merit Allocation Program</a> thanks to sponsorship by <a href="https://www.ozgrav.org/">OzGrav</a>.
+The training was developed in collaboration with the proposers of the project: Drs Caroline Foster, Nandini Sahu, and Cristina Martinez-Lombilla.
 The workshop is developed in the style of a data carpentries workshop.</p>
 
 {% if site.carpentry == "swc" %}
@@ -114,9 +114,9 @@ LOCATION
     <td><a href="https://www.google.com/maps/place/Curtin+Institute+of+Radio+Astronomy+(CIRA)/@-31.9952735,115.8895341,18z/data=!4m6!3m5!1s0x2a32bc83267dccdb:0x379a50125fb670db!8m2!3d-31.9945426!4d115.8885841!16s%2Fg%2F11c2dgc6pb?entry=ttu">Google Maps</a></td>
   </tr>
   <tr>
-    <td>Macquarie University</td>
+    <td>21WW lvl 2, room 300, Macquarie University</td>
     <td>September 11th-16th</td>
-    <td>link</td>
+    <td><a href="https://www.google.com/maps/place/Macquarie+Theatre/@-33.7748316,151.1135089,17z/data=!3m1!5s0x6b12a6723615af0d:0xe22e0b0919789616!4m6!3m5!1s0x6b12a672314df79f:0x486b7a7020bffead!8m2!3d-33.7746449!4d151.1122661!16s%2Fg%2F11c603z4nq?entry=ttu">Google Maps</a></td>
   </tr>
   <tr>
    <td>Melbourne University</td>

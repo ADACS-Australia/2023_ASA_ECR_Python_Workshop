@@ -30,12 +30,12 @@ There are additionally many packages that are built on top of Pandas to address 
 Pandas is a great solution for many of your data analysis and visualization needs however it is designed for tabular data.
 Alternatives to Pandas include:
 
-| module | notes |
-| -- | -- |
-| [Numpy](https://numpy.org/) | ndarrays can have up to 32 dimensions, but need to be of a single data type | 
-| [Vaex](https://vaex.readthedocs.io/en/latest/) | DataFrames like Pandas, with lazy evaluation of **billions** of rows per second. Desiged for big data. Uses memory mapping.|
-| [Dask](https://www.dask.org/) | Focus on scalability and portability across architectures (laptop/desktop/cloud/HPC). Lazy evaluation, and workflow management.  |
-| [Xarray](https://docs.xarray.dev/en/stable/) | For working with labelled multi-dimensional arrays. Like FITS but actually good! | 
+| module                                         | notes                                                                                                                           |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [Numpy](https://numpy.org/)                    | ndarrays can have up to 32 dimensions, but need to be of a single data type                                                     |
+| [Vaex](https://vaex.readthedocs.io/en/latest/) | DataFrames like Pandas, with lazy evaluation of **billions** of rows per second. Desiged for big data. Uses memory mapping.     |
+| [Dask](https://www.dask.org/)                  | Focus on scalability and portability across architectures (laptop/desktop/cloud/HPC). Lazy evaluation, and workflow management. |
+| [Xarray](https://docs.xarray.dev/en/stable/)   | For working with labelled multi-dimensional arrays. Like FITS but actually good!                                                |
 
 
 Pandas provides a few different data structures that are useful for this lesson with the main one being the **DataFrame**.
@@ -184,9 +184,7 @@ Let's look at the data using these.
 > 
 > 2. `surveys_df.shape` Take note of the output of `shape` - what format does it
 >   return the shape of the DataFrame in?
->   
->  HINT: [More on tuples, here][python-datastructures].
-> 
+>  
 > 3. `surveys_df.head()` Also, what does `surveys_df.head(15)` do?
 > 
 > 4. `surveys_df.tail()`
@@ -242,7 +240,7 @@ which **returns**:
 
 ~~~
 array(['NL', 'DM', 'PF', 'PE', 'DS', 'PP', 'SH', 'OT', 'DO', 'OX', 'SS',
-       'OL', 'RM', nan, 'SA', 'PM', 'AH', 'DX', 'AB', 'CB', 'CM', 'CQ',
+       'OL', 'RM', None, 'SA', 'PM', 'AH', 'DX', 'AB', 'CB', 'CM', 'CQ',
        'RF', 'PC', 'PG', 'PH', 'PU', 'CV', 'UR', 'UP', 'ZL', 'UL', 'CS',
        'SC', 'BA', 'SF', 'RO', 'AS', 'SO', 'PI', 'ST', 'CU', 'SU', 'RX',
        'PB', 'PL', 'PX', 'CT', 'US'], dtype=object)
@@ -267,6 +265,8 @@ array(['NL', 'DM', 'PF', 'PE', 'DS', 'PP', 'SH', 'OT', 'DO', 'OX', 'SS',
 > >    they are alternative ways of getting the unique values.
 > >    The `nunique` method combines the count and unique value extraction,
 > >    and can help avoid the creation of intermediate variables like `site_names`.
+> >
+> > **Note**: the `.unique()` function will return all the unique values including `None` or `NaN` if they exist, however the `.nunique()` function will only count the not blank entries, so you may get a difference in counts of 1.
 > {: .solution}
 {: .challenge}
 

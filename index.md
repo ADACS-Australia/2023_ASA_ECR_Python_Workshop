@@ -119,9 +119,9 @@ LOCATION
     <td><a href="https://www.google.com/maps/place/Macquarie+Theatre/@-33.7748316,151.1135089,17z/data=!3m1!5s0x6b12a6723615af0d:0xe22e0b0919789616!4m6!3m5!1s0x6b12a672314df79f:0x486b7a7020bffead!8m2!3d-33.7746449!4d151.1122661!16s%2Fg%2F11c603z4nq?entry=ttu">Google Maps</a></td>
   </tr>
   <tr>
-   <td>University of Melbourne</td>
+   <td>Physics Podium, room 205, University of Melbourne</td>
    <td>September 25th - 28th</td>
-   <td>link</td>
+   <td><a href="https://www.google.com/maps/place/David+Caro+Building+(South+Wing)/@-37.7970017,144.9635317,19.21z/data=!3m1!5s0x6ad642d4e6c9d575:0xadad208affbf6060!4m14!1m7!3m6!1s0x6ad642d4f8a046fb:0x312c407fba12ee27!2sSchool+of+Physics+(David+Caro+Building)!8m2!3d-37.796952!4d144.9638098!16s%2Fg%2F11cnpbz7_b!3m5!1s0x6ad643e223917421:0x7cc5d21bb3e8b123!8m2!3d-37.7971572!4d144.9637669!16s%2Fg%2F11kc1zpyt4?entry=ttu">Google Maps</a</td>
   </tr>
 </table>
 

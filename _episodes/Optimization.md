@@ -83,7 +83,7 @@ These packages can provide significant performance increases, often by implement
 
 Using `scalene` we'll re-run our initial profiling to ensure the results are consistent with the [profiling]({{page.root}}{% link _episodes/BenchmarkingAndProfiling.md %}) we did in the previous lesson. 
 
-![scalene profile]({{page.root}}{% link fig/ScaleneOptimizationProfileStart.png %})
+![scalene profile]({{page.root}}{% link fig/ProfilingScaleneInitial.png %})
 
 We should see the I/O is still the main bottleneck and as per Amdahl's law we should fix that first.
 
@@ -100,28 +100,29 @@ import numpy as np
 
 ...
 
-def main():
+if __name__ == "__main__":
     parser = skysim_parser()
     options = parser.parse_args()
-    # if ra/dec are not supplied the use a default value
     if None in [options.ra, options.dec]:
-        ra, dec = get_radec()
+        central_ra, central_dec = get_radec()
     else:
-        ra = options.ra
-        dec = options.dec
-    
-    ras, decs = make_stars(ra,dec, NSRC)
+        central_ra = options.ra
+        central_dec = options.dec
+
+    ras, decs = make_stars(central_ra, central_dec)
 
     # Turn our list of floats into NumPy arrays
     ras = np.array(ras)
     decs = np.array(decs)
+
     # We stack the arrays together, and use savetxt with a comma delimiter
-    np.savetxt(options.out, np.stack((ras, decs), axis = -1), delimiter=",")
+    np.savetxt(options.out, np.stack((ras, decs), axis=-1), delimiter=",")
+
     print(f"Wrote {options.out}")
 ~~~
 {: .language-python}
 
-Let's rerun scalene without `sky_sim_opt.py`
+Let's rerun scalene with `sky_sim_opt.py`
 
 ![scalene_profile]({{page.root}}{% link fig/ScaleneOptimizationProfileNumPy.png %})
 
@@ -158,64 +159,92 @@ Although, as we look further into the NumPy documentation for more ideas we find
 Employing `np.random.uniform` change alongside our NumPy `savetxt` we get the following `sky_sim_opt`:
 
 ~~~
+#! /usr/bin/env python
 """
-A script to simulate a population of stars around the Andromeda galaxy
+Simulate a catalog of stars near to the Andromeda constellation
 """
 
-# convert to decimal degrees
-import math
 import argparse
+import math
 import numpy as np
-from typing import Tuple
+import random
 
 NSRC = 1_000_000
 
-def get_radec() -> Tuple[float, float]:
+
+def get_radec():
     """
-    Determine Andromeda location in ra/dec degrees
+    Generate the ra/dec coordinates of Andromeda
+    in decimal degrees.
 
     Returns
     -------
-    tuple(ra: float, dec: float)
-        The Andromeda RA/DEC coordinate
+    ra : float
+        The RA, in degrees, for Andromeda
+    dec : float
+        The DEC, in degrees for Andromeda
     """
     # from wikipedia
-    RA = '00:42:44.3'
-    DEC = '41:16:09'
+    andromeda_ra = '00:42:44.3'
+    andromeda_dec = '41:16:09'
 
-    d, m, s = DEC.split(':')
-    dec = int(d)+int(m)/60+float(s)/3600
+    degrees, minutes, seconds = andromeda_dec.split(':')
+    dec = int(degrees)+int(minutes)/60+float(seconds)/3600
 
-    h, m, s = RA.split(':')
-    ra = 15*(int(h)+int(m)/60+float(s)/3600)
+    hours, minutes, seconds = andromeda_ra.split(':')
+    ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
     ra = ra/math.cos(dec*math.pi/180)
-    
-    return (ra, dec)
+    return ra, dec
 
 
-def make_stars(ra: float, dec: float, num_stars: int) -> Tuple[np.ndarray, np.ndarray]:
+def crop_to_circle(ras, decs, ref_ra, ref_dec, radius):
     """
-    Generate num_stars around a given RA/DEC coordinate given as floats in degrees.
+    Crop an input list of positions so that they lie within radius of
+    a reference position
 
     Parameters
     ----------
-    ra : float
-        The Right Ascension of the coordinate in the sky
-    dec : float
-        The Declination of the coordinate in the sky
-    num_stars : int
-        The number of stars we wish to generate
-
+    ras,decs : list(float)
+        The ra and dec in degrees of the data points
+    ref_ra, ref_dec: float
+        The reference location
+    radius: float
+        The radius in degrees
     Returns
     -------
-    ras : np.ndarray, decs: np.ndarray
-        A tuple of numpy arrays containing the RA and DEC coordinates in two arrays of the same size
+    ras, decs : list
+        A list of ra and dec coordinates that pass our filter.
     """
+    ra_out = []
+    dec_out = []
+    for i in range(len(ras)):
+        if (ras[i]-ref_ra)**2 + (decs[i]-ref_dec)**2 < radius**2:
+            ra_out.append(ras[i])
+            dec_out.append(ras[i])
+    return ra_out, dec_out
 
-    # Making these as a numpy function allowed us to remove the comparably slow for loop, and take advantage of vectorization that numpy offers.
-    ras = np.random.uniform(ra - 1, ra + 1, size = num_stars)
-    decs = np.random.uniform(dec - 1, dec + 1, size = num_stars)
-    return (ras.tolist(), decs.tolist())
+
+def make_stars(ra, dec, nsrc=NSRC):
+    """
+    Generate NSRC stars within 1 degree of the given ra/dec
+
+    Parameters
+    ----------
+    ra,dec : float
+        The ra and dec in degrees for the central location.
+    nsrc : int
+        The number of star locations to generate
+    
+    Returns
+    -------
+    ras, decs : list
+        A list of ra and dec coordinates.
+    """
+    ras = np.random.uniform(ra - 1, ra + 1, size=nsrc)
+    decs = np.random.uniform(dec - 1, dec + 1, size=nsrc)
+    # apply our filter
+    ras, decs = crop_to_circle(ras, decs, ra, dec, 1)
+    return ras, decs
 
 
 def skysim_parser():
@@ -228,26 +257,25 @@ def skysim_parser():
         The parser for skysim.
     """
     parser = argparse.ArgumentParser(prog='sky_sim', prefix_chars='-')
-    parser.add_argument('--ra', dest = 'ra', type=float, default=None,
+    parser.add_argument('--ra', dest='ra', type=float, default=None,
                         help="Central ra (degrees) for the simulation location")
-    parser.add_argument('--dec', dest = 'dec', type=float, default=None,
+    parser.add_argument('--dec', dest='dec', type=float, default=None,
                         help="Central dec (degrees) for the simulation location")
     parser.add_argument('--out', dest='out', type=str, default='catalog.csv',
                         help='destination for the output catalog')
     return parser
 
-def main():
+
+if __name__ == "__main__":
     parser = skysim_parser()
     options = parser.parse_args()
-    # if ra/dec are not supplied the use a default value
     if None in [options.ra, options.dec]:
-        ra, dec = get_radec()
+        central_ra, central_dec = get_radec()
     else:
-        ra = options.ra
-        dec = options.dec
-    
-    # We are now returning numpy arrays
-    ras, decs = make_stars(ra,dec, NSRC)
+        central_ra = options.ra
+        central_dec = options.dec
+
+    ras, decs = make_stars(central_ra, central_dec)
 
     # now write these to a csv file for use by my other program
     with open(options.out,'w') as f:
@@ -255,9 +283,6 @@ def main():
         for i in range(NSRC):
             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
     print(f"Wrote {options.out}")
-
-if __name__ == "__main__":
-    main()
 ~~~
 {: .language-python}
 

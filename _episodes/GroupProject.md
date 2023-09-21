@@ -15,12 +15,15 @@ keypoints:
 ## Group projects
 Throughout this week, we'll spend the mornings learning different aspects of software development in python.
 During the lessons there will be opportunities to practices the lessons learned, but often these will involve simple or contrived examples.
-We have decided to use mini group projects to allow you all to really dig into the lessons learned and practice them in a more real world situation.
+We have decided to offer mini group projects to allow you all to really dig into the lessons learned and practice them in a more real world situation.
 
-
+### Project options
+1. Work on your own existing solo project, 
+2. Work on an existing project with a group, 
+3. Form a new group and start a new project as per below.
 
 ### Group project topic ideas
-Some suggestions for projects:
+Some suggestions for new group projects:
 - a command line tool that will take an ra/dec and tell you which constellation it lies in,
 - a tool to identify which satellites will be in your field of view during an observation,
 - an anti-transient checker that will tell you if your transient is actually just the Moon/Jupiter/etc

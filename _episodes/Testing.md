@@ -65,6 +65,7 @@ Firstly we need a directory called `tests` which contain test modules named as `
 The functions themselves need to do one of two things:
 - return `None` if the test was successful
 - raise an exception if the test failed
+
 A common way to raise an exception if the tests fails is through Python's `assert` statement, which makes an assertion about something that we expect to be true: for example, `assert 1+1==2`
 
 Here is an example test.
@@ -115,9 +116,10 @@ This way you can keep the test code, but it just wont run.
 Let's now work with some more meaningful tests for the `sky_sim.py` that we have been working with.
 In particular let's test the `get_radec()` and `make_stars()` functions.
 
-To do this we nee to know how to work with exceptions.
-In python we can use the keyword `raise` to send an exception up the call stack where it will eventually be caught in a `try/except` clause (or by the python interpreter itself).
+To do this we need to know how to work with exceptions.
+One option is to use Python's keyword `raise` to send an exception up the call stack where it will eventually be caught by Pytest.
 For our testing purposes we need to raise a particular type of exception called an `AssertionError`.
+We can do this either by explicitly raising an exception (`raise AssertionError`) or alternatively using Python's `assert` keyword.
 The syntax is:
 
 ~~~

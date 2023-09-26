@@ -65,16 +65,14 @@ Firstly we need a directory called `tests` which contain test modules named as `
 The functions themselves need to do one of two things:
 - return `None` if the test was successful
 - raise an exception if the test failed
+A common way to raise an exception if the tests fails is through Python's `assert` statement, which makes an assertion about something that we expect to be true: for example, `assert 1+1==2`
 
 Here is an example test.
 It would live in the file `test_module.py`, and simply tries to import our code:
 ~~~
 def test_module_import():
-    try:
-        import sky_sim
-    except Exception as e:
-        raise AssertionError("Failed to import mymodule")
-    return
+    # if this throws an exception during loading, pytest will record a failure
+    import sky_sim
 ~~~
 {: .language-python}
 
@@ -124,10 +122,8 @@ The syntax is:
 
 ~~~
 def test_that_a_thing_works():
-    # do things
-    if not thing_works:
-        raise AssertionError("Description of what failed")
-    return
+    answer = 6 * 9
+    assert answer == 42
 ~~~
 {: .language-python}
 

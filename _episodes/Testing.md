@@ -71,6 +71,7 @@ Here is an example test.
 It would live in the file `test_module.py`, and simply tries to import our code:
 ~~~
 def test_module_import():
+    # if this throws an exception during loading, pytest will record a failure
     import sky_sim
 ~~~
 {: .language-python}

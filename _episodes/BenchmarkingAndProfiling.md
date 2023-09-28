@@ -288,7 +288,7 @@ Instead you simply run `scalene your_prog.py` and it will run your code and deli
 > > import math
 > > import random
 > > 
-> > NSRC = 5_000_000
+> > NSRC = 1_000_000
 > > 
 > > 
 > > def get_radec():
@@ -307,11 +307,11 @@ Instead you simply run `scalene your_prog.py` and it will run your code and deli
 > >     andromeda_ra = '00:42:44.3'
 > >     andromeda_dec = '41:16:09'
 > > 
-> >     d, m, s = andromeda_dec.split(':')
-> >     dec = int(d)+int(m)/60+float(s)/3600
+> >     degrees, minutes, seconds = andromeda_dec.split(':')
+> >     dec = int(degrees)+int(minutes)/60+float(seconds)/3600
 > > 
-> >     h, m, s = andromeda_ra.split(':')
-> >     ra = 15*(int(h)+int(m)/60+float(s)/3600)
+> >     hours, minutes, seconds = andromeda_ra.split(':')
+> >     ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
 > >     ra = ra/math.cos(dec*math.pi/180)
 > >     return ra, dec
 > > 
@@ -343,7 +343,7 @@ Instead you simply run `scalene your_prog.py` and it will run your code and deli
 > >     return ra_out, dec_out
 > > 
 > > 
-> > def make_positions(ra, dec, nsrc=NSRC):
+> > def make_stars(ra, dec, nsrc=NSRC):
 > >     """
 > >     Generate NSRC stars within 1 degree of the given ra/dec
 > > 
@@ -353,7 +353,7 @@ Instead you simply run `scalene your_prog.py` and it will run your code and deli
 > >         The ra and dec in degrees for the central location.
 > >     nsrc : int
 > >         The number of star locations to generate
-> > 
+> >     
 > >     Returns
 > >     -------
 > >     ras, decs : list
@@ -392,14 +392,15 @@ Instead you simply run `scalene your_prog.py` and it will run your code and deli
 > >     parser = skysim_parser()
 > >     options = parser.parse_args()
 > >     if None in [options.ra, options.dec]:
-> >         ra, dec = get_radec()
+> >         central_ra, central_dec = get_radec()
 > >     else:
-> >         ra = options.ra
-> >         dec = options.dec
+> >         central_ra = options.ra
+> >         central_dec = options.dec
 > > 
-> >     ras, decs = make_positions(ra, dec)
+> >     ras, decs = make_stars(central_ra, central_dec)
 > >     # now write these to a csv file for use by my other program
 > >     with open(options.out, 'w') as f:
+> >         print("id,ra,dec", file=f)
 > >         for i in range(len(ras)):
 > >             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
 > >     print(f"Wrote {options.out}")

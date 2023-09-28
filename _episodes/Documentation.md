@@ -356,17 +356,18 @@ As such every docstring should contain at least a one line statement that shows 
 > >     Generate the ra/dec coordinates of Andromeda
 > >     in decimal degrees.
 > >     """
+> > 
 > >     # from wikipedia
 > >     andromeda_ra = '00:42:44.3'
 > >     andromeda_dec = '41:16:09'
 > > 
-> >     d, m, s = andromeda_dec.split(':')
-> >     dec = int(d)+int(m)/60+float(s)/3600
+> >     degrees, minutes, seconds = andromeda_dec.split(':')
+> >     dec = int(degrees)+int(minutes)/60+float(seconds)/3600
 > > 
-> >     h, m, s = andromeda_ra.split(':')
-> >     ra = 15*(int(h)+int(m)/60+float(s)/3600)
+> >     hours, minutes, seconds = andromeda_ra.split(':')
+> >     ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
 > >     ra = ra/math.cos(dec*math.pi/180)
-> >     return ra,dec
+> >     return ra, dec
 > > ~~~
 > > {: .language-python}
 > {: .solution}
@@ -401,17 +402,18 @@ If the function modifies an input but does not return the modified version as an
 > >     dec : float
 > >         The DEC, in degrees for Andromeda
 > >     """
+> > 
 > >     # from wikipedia
 > >     andromeda_ra = '00:42:44.3'
 > >     andromeda_dec = '41:16:09'
 > > 
-> >     d, m, s = andromeda_dec.split(':')
-> >     dec = int(d)+int(m)/60+float(s)/3600
+> >     degrees, minutes, seconds = andromeda_dec.split(':')
+> >     dec = int(degrees)+int(minutes)/60+float(seconds)/3600
 > > 
-> >     h, m, s = andromeda_ra.split(':')
-> >     ra = 15*(int(h)+int(m)/60+float(s)/3600)
+> >     hours, minutes, seconds = andromeda_ra.split(':')
+> >     ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
 > >     ra = ra/math.cos(dec*math.pi/180)
-> >     return ra,dec
+> >     return ra, dec
 > > ~~~
 > > {: .language-python}
 > {: .solution}
@@ -546,16 +548,15 @@ def skysim_parser():
 if __name__ == "__main__":
     parser = skysim_parser()
     options = parser.parse_args()
-    # if ra/dec are not supplied the use a default value
     if None in [options.ra, options.dec]:
         ra, dec = get_radec()
     else:
         ra = options.ra
         dec = options.dec
-    
-    ras, decs = make_stars(ra,dec)
+
+    ras, decs = make_stars(ra, dec)
     # now write these to a csv file for use by my other program
-    with open(options.out,'w') as f:
+    with open(options.out, 'w') as f:
         print("id,ra,dec", file=f)
         for i in range(NSRC):
             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)

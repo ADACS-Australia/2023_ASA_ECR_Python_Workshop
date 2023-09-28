@@ -5,6 +5,7 @@ Simulate a catalog of stars near to the Andromeda constellation
 
 import argparse
 import math
+import numpy as np
 import random
 
 NSRC = 1_000_000
@@ -78,11 +79,8 @@ def make_stars(ra, dec, nsrc=NSRC):
     ras, decs : list
         A list of ra and dec coordinates.
     """
-    ras = []
-    decs = []
-    for _ in range(nsrc):
-        ras.append(ra + random.uniform(-1, 1))
-        decs.append(dec + random.uniform(-1, 1))
+    ras = np.random.uniform(ra - 1, ra + 1, size=nsrc)
+    decs = np.random.uniform(dec - 1, dec + 1, size=nsrc)
     # apply our filter
     ras, decs = crop_to_circle(ras, decs, ra, dec, 1)
     return ras, decs
@@ -117,8 +115,9 @@ if __name__ == "__main__":
         central_dec = options.dec
 
     ras, decs = make_stars(central_ra, central_dec)
+
     # now write these to a csv file for use by my other program
-    with open(options.out, 'w') as f:
+    with open(options.out,'w') as f:
         print("id,ra,dec", file=f)
         for i in range(len(ras)):
             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)

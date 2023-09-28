@@ -120,10 +120,10 @@ Either in two branches, or in two instances of your repository.
 >
 > Go to your GitHub repo and choose the `sky_sim.py` file.
 > Open this file and edit it using the GitHub online editor.
-> Change the `ra` and `dec` values for our galaxy.
+> Change the `andromeda_ra` and `andromeda_dec` values for our galaxy.
 > Save the file and make a note about the commit like "updating ra/dec from GitHub".
 >
-> On your local repo, edit the same file, and change the `ra` and `dec` to a **different** value.
+> On your local repo, edit the same file, and change the `andromeda_ra` and `andromeda_dec` to a **different** value.
 > Save the file and make a commit with a comment like "updating the ra/dec from local".
 >
 > Don't push/pull your repo (yet).
@@ -184,11 +184,11 @@ The conflict is marked in in the affected file:
 
 # from wikipedia
 <<<<<<< HEAD
-ra = '00:42:44.2'
-dec = '41:16:08'
+    andromeda_ra = '00:42:44.2'
+    andromeda_dec = '41:16:08'
 =======
-ra = '00:42:44.4'
-dec = '41:16:10'
+    andromeda_ra = '00:42:44.4'
+    andromeda_dec = '41:16:10'
 >>>>>>> 4a180aeb4955e4af97cfef3a2831ad8029ceae1d
 
 # convert to decimal degrees
@@ -261,7 +261,7 @@ Now we can push our changes to GitHub with `git push origin main` and we will ha
 > git push --set-upstream origin dev
 > ~~~
 > {: .language-bash}
->>
+>
 > From now on, you should only make feature branches from `dev`, not from `main`.
 {: .challenge}
 
@@ -329,15 +329,15 @@ The unique ID assigned to each issue can be used to create links to that issue:
 {: .challenge}
 
 Now you can work on fixing the bug by making changes locally and committing them to the feature branch.
-We already have a function called `clip_to_radius` which is currently not being used (and doesn't do anything).
+We already have a function called `crop_to_circle` which is currently not being used (and doesn't do anything).
 
 > ## Fix the bug
-> In your local repo fill out the `clip_to_radius` function so that it will:
+> In your local repo fill out the `crop_to_circle` function so that it will:
 > - accept `np.array`s of ra/dec, a reference ra and dec, a radius
 > - return only the positions within `radius` of the reference location
 >
 > Additionally:
-> - modify the rest of `sky_sim.py` so that it will call `clip_to_radius` on the generated data points before saving them
+> - modify the rest of `sky_sim.py` so that it will call `crop_to_circle` on the generated data points before saving them
 > - *for now* ignore the fact that less than N points are being generated,
 > - *for now* use a euclidean distance rather than a great circle distance.
 >
@@ -376,7 +376,7 @@ We already have a function called `clip_to_radius` which is currently not being 
 >     return ra_out, dec_out
 > 
 >
-> def make_positions(ra,dec, nsrc=NSRC):
+> def make_stars(ra,dec, nsrc=NSRC):
 >     ...
 >     # apply our filter
 >     ras, decs = crop_to_circle(ras,decs)

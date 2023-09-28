@@ -160,9 +160,76 @@ Notice that `pylint` *really* doesn't like lines like `from math import *`.
 > ## auto-formatters
 > There are also auto formatting tools that will do most of the style rewriting for you.
 >
-> In our discussion of [IDEs]({{page.root}}{% link _episodes/IDEs.md %}) we'll touch on this again.
+> Refer to the bonus episode on [IDEs]({{page.root}}{% link _episodes/IDEs.md %}) for some more info.
 > 
 {: .callout}
+
+> ## The fixed code
+> ~~~
+> #! /usr/bin/env python
+> """
+> Simulate a catalog of stars near to the Andromeda constellation
+> """
+> 
+> import math
+> import random
+> 
+> NSRC = 1_000_000
+> 
+> 
+> def get_radec():
+>     # from wikipedia
+>     andromeda_ra = '00:42:44.3'
+>     andromeda_dec = '41:16:09'
+> 
+>     degrees, minutes, seconds = andromeda_dec.split(':')
+>     dec = int(degrees)+int(minutes)/60+float(seconds)/3600
+> 
+>     hours, minutes, seconds = andromeda_ra.split(':')
+>     ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
+>     ra = ra/math.cos(dec*math.pi/180)
+>     return ra, dec
+> 
+> 
+> def make_stars(ra, dec, nsrc=NSRC):
+>     ras = []
+>     decs = []
+>     for _ in range(nsrc):
+>         ras.append(ra + random.uniform(-1, 1))
+>         decs.append(dec + random.uniform(-1, 1))
+>     return ras, decs
+> 
+> 
+> if __name__ == "__main__":
+>     central_ra, central_dec = get_radec()
+>     ras, decs = make_stars(central_ra, central_dec)
+>     # now write these to a csv file for use by my other program
+>     with open('catalogue.csv', 'w', encoding='utf8') as f:
+>         print("id,ra,dec", file=f)
+>         for i in range(NSRC):
+>             print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
+>     print("Wrote catalogue.csv")
+> 
+> ~~~
+> {: .language-python}
+>
+> Errors reported by `pylint` that i'm happy to ignore:
+> ~~~
+> ************* Module sky_sim
+> sky_sim_linted.py:12:0: C0116: Missing function or method docstring (missing-function-docstring)
+> sky_sim_linted.py:21:4: C0103: Variable name "ra" doesn't conform to snake_case naming style (invalid-name)
+> sky_sim_linted.py:22:4: C0103: Variable name "ra" doesn't conform to snake_case naming style (invalid-name)
+> sky_sim_linted.py:26:0: C0116: Missing function or method docstring (missing-function-docstring)
+> sky_sim_linted.py:26:15: C0103: Argument name "ra" doesn't conform to snake_case naming style (invalid-name)
+> sky_sim_linted.py:27:4: W0621: Redefining name 'ras' from outer scope (line 37) (redefined-outer-name)
+> sky_sim_linted.py:28:4: W0621: Redefining name 'decs' from outer scope (line 37) (redefined-outer-name)
+> ~~~
+> {: .output}
+>
+> - The names don't abide the strict naming conventions but they are not misleading so I will keep them.
+> - We will look at docstrings in a [later lesson]({{page.root}}{% link _episodes/Documentation.md %})
+> 
+{: .solution}
 
 ## DRY coding principle
 

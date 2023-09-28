@@ -142,20 +142,30 @@ def get_radec():
 If you find that some error occurs in this function then you might add some extra print statements to tease out the problem:
 ~~~
 def get_radec():
-    ...
+    """
+    Generate the ra/dec coordinates of Andromeda
+    in decimal degrees.
+
+    Returns
+    -------
+    ra : float
+        The RA, in degrees, for Andromeda
+    dec : float
+        The DEC, in degrees for Andromeda
+    """
     print("Fetching reference coordinates")
     # from wikipedia
     andromeda_ra = '00:42:44.3'
     andromeda_dec = '41:16:09'
     print(f"Input is: {ra}, {dec}")
 
-    d, m, s = andromeda_dec.split(':')
-    dec = int(d)+int(m)/60+float(s)/3600
-    print(f"Dec is: {d} deg, {m} min, {s} sec -> {dec} degrees")
+    degrees, minutes, seconds = andromeda_dec.split(':')
+    dec = int(degrees)+int(minutes)/60+float(seconds)/3600
+    print(f"Dec is: {degrees} deg, {minutes} min, {seconds} sec -> {dec} degrees")
 
-    h, m, s = andromeda_ra.split(':')
-    ra = 15*(int(h)+int(m)/60+float(s)/3600)
-    print(f"RA is: {h} hrs, {m} min, {s} sec -> {ra} hours")
+    hours, minutes, seconds = andromeda_ra.split(':')
+    ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
+    print(f"RA is: {hours} hrs, {minutes} min, {seconds} sec -> {ra} hours")
     ra = ra/math.cos(dec*math.pi/180)
     print(f"RA is {ra} degrees")
     return ra, dec
@@ -276,8 +286,8 @@ Now you do the following:
 4. Profit
 
 
-> ## explore the `get_ra_dec` function
-> 1. Within your `sky_sim.py` file, set a breakpoint within the `get_ra_dec` function on the line where the ra is being assigned.
+> ## explore the `get_radec` function
+> 1. Within your `sky_sim.py` file, set a breakpoint within the `get_radec` function on the line where the ra is being assigned.
 > 2. Run the VSCode debugger on this file.
 > 3. When your code is paused by the debugger, use the debug pane to explore what variables exist and their values
 > 4. Use the 'step over' button to work through the function, noting how the variables change value

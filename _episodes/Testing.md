@@ -66,15 +66,14 @@ The functions themselves need to do one of two things:
 - return `None` if the test was successful
 - raise an exception if the test failed
 
+A common way to raise an exception if the tests fails is through Python's `assert` statement, which makes an assertion about something that we expect to be true: for example, `assert 1+1==2`
+
 Here is an example test.
 It would live in the file `test_module.py`, and simply tries to import our code:
 ~~~
 def test_module_import():
-    try:
-        import sky_sim
-    except Exception as e:
-        raise AssertionError("Failed to import mymodule")
-    return
+    # if this throws an exception during loading, pytest will record a failure
+    import sky_sim
 ~~~
 {: .language-python}
 
@@ -117,17 +116,16 @@ This way you can keep the test code, but it just wont run.
 Let's now work with some more meaningful tests for the `sky_sim.py` that we have been working with.
 In particular let's test the `get_radec()` and `make_stars()` functions.
 
-To do this we nee to know how to work with exceptions.
-In python we can use the keyword `raise` to send an exception up the call stack where it will eventually be caught in a `try/except` clause (or by the python interpreter itself).
+To do this we need to know how to work with exceptions.
+One option is to use Python's keyword `raise` to send an exception up the call stack where it will eventually be caught by Pytest.
 For our testing purposes we need to raise a particular type of exception called an `AssertionError`.
+We can do this either by explicitly raising an exception (`raise AssertionError`) or alternatively using Python's `assert` keyword.
 The syntax is:
 
 ~~~
 def test_that_a_thing_works():
-    # do things
-    if not thing_works:
-        raise AssertionError("Description of what failed")
-    return
+    answer = 6 * 9
+    assert answer == 42
 ~~~
 {: .language-python}
 
@@ -146,28 +144,17 @@ We can have multiple exit points in our function, corresponding to the various w
 > > ## initial function
 > > ~~~
 > > def get_radec():
-> >     """
-> >     Generate the ra/dec coordinates of Andromeda
-> >     in decimal degrees.
-> >
-> >     Returns
-> >     -------
-> >     ra : float
-> >         The RA, in degrees, for Andromeda
-> >     dec : float
-> >         The DEC, in degrees for Andromeda
-> >     """
 > >     # from wikipedia
 > >     andromeda_ra = '00:42:44.3'
 > >     andromeda_dec = '41:16:09'
-> >
-> >     d, m, s = andromeda_dec.split(':')
-> >     dec = int(d)+int(m)/60+float(s)/3600
-> >
-> >     h, m, s = andromeda_ra.split(':')
-> >     ra = 15*(int(h)+int(m)/60+float(s)/3600)
+> > 
+> >     degrees, minutes, seconds = andromeda_dec.split(':')
+> >     dec = int(degrees)+int(minutes)/60+float(seconds)/3600
+> > 
+> >     hours, minutes, seconds = andromeda_ra.split(':')
+> >     ra = 15*(int(hours)+int(minutes)/60+float(seconds)/3600)
 > >     ra = ra/math.cos(dec*math.pi/180)
-> >     return ra,dec
+> >     return ra, dec
 > > ~~~
 > > {: .language-python}
 > {: .solution}
@@ -180,26 +167,13 @@ We can have multiple exit points in our function, corresponding to the various w
 > > ## initial function
 > > ~~~
 > > def make_stars(ra, dec, nsrc=NSRC):
-> >     """
-> >     Generate NSRC stars within 1 degree of the given ra/dec
-> >
-> >     Parameters
-> >     ----------
-> >     ra,dec : float
-> >         The ra and dec in degrees for the central location.
-> >     nsrc : int
-> >         The number of star locations to generate
-> >
-> >     Returns
-> >     -------
-> >     ras, decs : list
-> >         A list of ra and dec coordinates.
-> >     """
 > >     ras = []
 > >     decs = []
 > >     for _ in range(nsrc):
-> >         ras.append(ra + random.uniform(-1,1))
-> >         decs.append(dec + random.uniform(-1,1))
+> >         ras.append(ra + random.uniform(-1, 1))
+> >         decs.append(dec + random.uniform(-1, 1))
+> >     # apply our filter
+> >     ras, decs = crop_to_circle(ras,decs)
 > >     return ras, decs
 > > ~~~
 > > {: .language-python}

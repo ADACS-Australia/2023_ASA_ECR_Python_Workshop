@@ -13,9 +13,9 @@ humandate: "September 4-8, 11-16, 25-28 2023"    # human-readable dates for the 
 humantime: "9:00 am - 5:00 pm Local"    # human-readable times for the workshop e.g., "9:00 am - 4:30 pm CEST (7:00 am - 2:30 pm UTC)"
 startdate: 2023-09-11      # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
 enddate: 2023-09-15        # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
-instructor: ["Patrick Clearwater", "Leonie Chevalier"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
-helper: ["Leonie Chevalier", "Patrick Clearwater"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
-email: ["pclearwater@swin.edu.au", "lchevalier@swin.edu.au"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
+instructor: ["Paul Hancock", "Nick Swainston", "Patrick Clearwater", "Leonie Chevalier"] # boxed, comma-separated list of instructors' names as strings, like ["Kay McNulty", "Betty Jennings", "Betty Snyder"]
+helper: ["James Tocknell", "Leonie Chevalier", "Patrick Clearwater"]     # boxed, comma-separated list of helpers' names, like ["Marlyn Wescoff", "Fran Bilas", "Ruth Lichterman"]
+email: ["paul.hancock@curtin.edu.au", "nswainston@swin.edu.au","pclearwater@swin.edu.au", "lchevalier@swin.edu.au"]    # boxed, comma-separated list of contact email addresses for the host, lead instructor, or whoever else is handling questions, like ["marlyn.wescoff@example.org", "fran.bilas@example.org", "ruth.lichterman@example.org"]
 collaborative_notes:  'https://pad.carpentries.org/2023-ADACS-ECR-WOrkshop' # optional: URL for the workshop collaborative notes, e.g. an Etherpad or Google Docs document (e.g., https://pad.carpentries.org/2015-01-01-euphoria)
 eventbrite:           # optional: alphanumeric key for Eventbrite registration, e.g., "1234567890AB" (if Eventbrite is being used)
 ---
@@ -262,7 +262,8 @@ available at https://codimd.carpentries.org
 <h2 id="collaborative_notes">Collaborative Notes</h2>
 
 <p>
-We will use this <a href="{{ page.collaborative_notes }}">collaborative document</a> for chatting, taking notes, and sharing URLs and bits of code.
+During the workshop we used an Etherpad for chatting, taking notes, and sharing URLs and bits of code.
+The Etherpad is now closed, but notes from the different workshops are available for <a href="{{page.root}}{% link data/Perth_Etherpad_redacted.pdf %}">Perth</a>, <a href="{{page.root}}{% link data/Sydney_Etherpad_redacted.pdf %}">Sydney</a>, and <a href="{{page.root}}{% link data/Melbourne_Etherpad_redacted.pdf %}">Melbourne</a>.
 </p>
 <hr/>
 {% endif %}
